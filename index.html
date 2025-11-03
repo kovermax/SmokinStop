@@ -9,11 +9,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- ONBOARDING ЭКРАН -->
+        <!-- ONBOARDING -->
         <div id="onboardingScreen" class="onboarding-screen active">
             <div class="onboarding-content">
                 <div class="onboarding-header">🚭 Бросить курить</div>
-                <div class="onboarding-subtitle">Твой путь к здоровой жизни начинается здесь</div>
+                <div class="onboarding-subtitle">Твой путь к здоровой жизни</div>
                 
                 <div class="onboarding-step" id="step1">
                     <div class="step-title">📊 Сколько сигарет в день?</div>
@@ -21,21 +21,21 @@
                 </div>
 
                 <div class="onboarding-step" id="step2" style="display: none;">
-                    <div class="step-title">⏱️ Интервал между перекурами (мин)?</div>
+                    <div class="step-title">⏱️ Интервал (мин)?</div>
                     <input type="number" id="minIntervalInput" min="5" max="300" value="45" class="modal-input">
                 </div>
 
                 <div class="onboarding-step" id="step3" style="display: none;">
-                    <div class="step-title">💰 Цена пачки сигарет (руб)?</div>
+                    <div class="step-title">💰 Цена пачки (руб)?</div>
                     <input type="number" id="cigPriceInput" min="1" max="1000" value="200" class="modal-input">
                 </div>
 
                 <div class="onboarding-step" id="step4" style="display: none;">
-                    <div class="step-title">🎯 Выбери план отказа</div>
+                    <div class="step-title">🎯 План отказа</div>
                     <div class="plan-buttons">
-                        <button class="plan-btn" data-plan="7">⚡ Быстрый (7 дн)</button>
-                        <button class="plan-btn" data-plan="30">📅 Стандарт (30 дн)</button>
-                        <button class="plan-btn" data-plan="60">💪 Интенсив (60 дн)</button>
+                        <button class="plan-btn" data-plan="7">⚡ 7 дн</button>
+                        <button class="plan-btn" data-plan="30">📅 30 дн</button>
+                        <button class="plan-btn" data-plan="60">💪 60 дн</button>
                     </div>
                 </div>
 
@@ -43,20 +43,18 @@
             </div>
         </div>
 
-        <!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+        <!-- ПРИЛОЖЕНИЕ -->
         <div id="appScreen" style="display: none;">
             <div class="header">
                 <h1>🚭 Бросить курить</h1>
-                <p id="headerSubtitle">Ты молодец! Продолжай!</p>
+                <p>Ты молодец! Продолжай!</p>
             </div>
 
-            <!-- Совет дня -->
             <div class="tip-card" id="tipCard" style="display: none;">
                 <div class="tip-icon">💡</div>
                 <div class="tip-text" id="tipText"></div>
             </div>
 
-            <!-- Вкладки навигации -->
             <div class="tabs-container">
                 <button class="tab-btn active" data-tab="home">📊 Главная</button>
                 <button class="tab-btn" data-tab="history">📈 История</button>
@@ -64,19 +62,17 @@
                 <button class="tab-btn" data-tab="settings">⚙️ Параметры</button>
             </div>
 
-            <!-- TAB: Главная -->
+            <!-- ГЛАВНАЯ -->
             <div id="home" class="tab-content active">
-                <!-- Деньги сэкономленные -->
                 <div class="money-card">
                     <div class="money-icon">💰</div>
                     <div class="money-info">
                         <div class="money-label">Сэкономлено</div>
                         <div class="money-value" id="moneySaved">0 ₽</div>
-                        <div class="money-sublabel" id="cigsSaved">0 сигарет</div>
+                        <div class="money-sublabel" id="cigsSaved">0 шт</div>
                     </div>
                 </div>
 
-                <!-- Статистика -->
                 <div class="stats">
                     <div class="stat-row">
                         <div class="stat-item">
@@ -94,41 +90,34 @@
                     </div>
                 </div>
 
-                <!-- Прогресс дневного лимита -->
                 <div class="daily-progress">
-                    <div class="progress-header">
-                        Лимит на день: <span id="progressCount">0</span>/<span id="progressLimit">5</span>
-                    </div>
+                    <div class="progress-header">Лимит: <span id="progressCount">0</span>/<span id="progressLimit">5</span></div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
-                    <div class="progress-status" id="progressStatus">✅ В пределах лимита</div>
+                    <div class="progress-status" id="progressStatus">✅ В пределах</div>
                 </div>
 
-                <!-- Таймер -->
                 <div class="timer-section">
-                    <div class="timer-label">Следующий перекур разрешён через</div>
+                    <div class="timer-label">Следующий перекур через</div>
                     <div class="timer-display" id="timerDisplay">00:00</div>
                     <button class="btn btn-primary" id="smokeBtn">Покурил 🚬</button>
                     <div id="statusBadge" class="status-badge status-allowed">✓ Можно курить</div>
                 </div>
 
-                <!-- История сегодня -->
-                <div id="todayHistory" class="smokes-list">
-                    <div class="smokes-list-title">История сегодня</div>
+                <div class="smokes-list">
+                    <div class="smokes-list-title">Сегодня</div>
                     <div id="history"></div>
                 </div>
             </div>
 
-            <!-- TAB: История -->
+            <!-- ИСТОРИЯ -->
             <div id="history" class="tab-content">
-                <!-- Недельный график -->
                 <div class="chart-section">
-                    <div class="chart-title">📊 Сигареты за неделю</div>
+                    <div class="chart-title">📊 За неделю</div>
                     <div class="chart-bars" id="weeklyChart"></div>
                 </div>
 
-                <!-- Календарь -->
                 <div class="calendar">
                     <div class="calendar-header">
                         <h3 id="calendarMonthYear">Ноябрь 2025</h3>
@@ -152,12 +141,12 @@
                 <div id="selectedDateSmokes"></div>
             </div>
 
-            <!-- TAB: Достижения -->
+            <!-- ДОСТИЖЕНИЯ -->
             <div id="achievements" class="tab-content">
                 <div class="achievements-container" id="achievementsContainer"></div>
             </div>
 
-            <!-- TAB: Параметры -->
+            <!-- ПАРАМЕТРЫ -->
             <div id="settings" class="tab-content">
                 <div class="settings-section">
                     <div class="settings-row">
@@ -191,7 +180,7 @@
 
                 <div class="settings-section">
                     <div class="settings-row">
-                        <span class="settings-label">Общая статистика</span>
+                        <span class="settings-label">Статистика</span>
                     </div>
                     <div style="padding: 12px 0;">
                         <div class="stats-grid">
@@ -207,18 +196,18 @@
                     </div>
                 </div>
 
-                <button class="btn btn-secondary" id="exportBtn">📥 Экспортировать</button>
+                <button class="btn btn-secondary" id="exportBtn">📥 Экспорт</button>
                 <button class="btn btn-secondary" id="resetBtn">🔄 Сброс</button>
             </div>
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПРИЧИНЫ -->
+    <!-- МОДАЛЬ ПРИЧИНЫ -->
     <div id="reasonModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">Причина перекура?</div>
+            <div class="modal-header">Причина?</div>
             <div class="modal-body">
-                <label class="modal-label">Выбери или напиши:</label>
+                <label class="modal-label">Выбери:</label>
                 <div class="reason-buttons">
                     <button class="reason-btn" data-reason="Стресс">😰 Стресс</button>
                     <button class="reason-btn" data-reason="Социум">👥 Люди</button>
@@ -227,40 +216,27 @@
                     <button class="reason-btn" data-reason="Алкоголь">🍺 Спиртное</button>
                     <button class="reason-btn" data-reason="Кофе">☕ Кофе</button>
                 </div>
-                <textarea class="modal-input" id="reasonInput" placeholder="Твоя причина..."></textarea>
+                <textarea class="modal-input" id="reasonInput" placeholder="Или напиши..."></textarea>
             </div>
             <div class="modal-buttons">
                 <button class="btn btn-secondary" id="cancelReasonBtn">Отмена</button>
-                <button class="btn btn-primary" id="confirmReasonBtn">Подтвердить</button>
+                <button class="btn btn-primary" id="confirmReasonBtn">OK</button>
             </div>
         </div>
     </div>
 
     <script>
-        // === КОНСТАНТЫ ===
-        const TIPS = [
-            "Пей воду! Обезвоживание часто принимают за голод.",
-            "Займись спортом на 10 минут. Это отвлечет от желания.",
-            "Позвони другу. Общение помогает справиться.",
-            "Прогулка на свежем воздухе помогает снизить тягу.",
-            "Жвачка без сахара отвлекает и освежает.",
-            "Помни, через 3-4 дня тяга ослабляется!",
-            "Каждый день без сигарет — это победа!",
-            "Медленное дыхание: вдох 4, выдох 4. Повтори 5 раз.",
-            "Твой организм восстанавливается уже через 20 минут!",
-            "Люди заметят твою уверенность и силу воли!"
-        ];
-
+        const TIPS = ["Пей воду!", "Займись спортом на 10 мин", "Позвони другу", "Прогулка на воздухе", "Жвачка без сахара", "Через 3-4 дня тяга ослабляется!", "Каждый день - победа!", "Медленное дыхание 5 раз", "Организм восстанавливается", "Люди заметят твою уверенность!"];
+        
         const ACHIEVEMENTS = [
-            { id: 1, name: 'Первый шаг', desc: '1 день', days: 1, icon: '👣', unlocked: false },
-            { id: 2, name: 'Неделя!', desc: '7 дней', days: 7, icon: '📅', unlocked: false },
-            { id: 3, name: 'Месяц!', desc: '30 дней', days: 30, icon: '🎉', unlocked: false },
-            { id: 4, name: 'Два месяца!', desc: '60 дней', days: 60, icon: '💪', unlocked: false },
-            { id: 5, name: 'Верность', desc: '5 дн подряд', days: 0, icon: '✅', unlocked: false },
-            { id: 6, name: 'Богач', desc: '1000 ₽ сэкон', days: 0, icon: '💰', unlocked: false }
+            { id: 1, name: 'Первый шаг', desc: '1 день', icon: '👣', unlocked: false },
+            { id: 2, name: 'Неделя!', desc: '7 дней', icon: '📅', unlocked: false },
+            { id: 3, name: 'Месяц!', desc: '30 дней', icon: '🎉', unlocked: false },
+            { id: 4, name: 'Два!', desc: '60 дней', icon: '💪', unlocked: false },
+            { id: 5, name: 'Верность', desc: '5 дн', icon: '✅', unlocked: false },
+            { id: 6, name: 'Богач', desc: '1000 ₽', icon: '💰', unlocked: false }
         ];
 
-        // === СОСТОЯНИЕ ===
         let state = {
             smokeEvents: [],
             minIntervalMinutes: 45,
@@ -275,41 +251,39 @@
         let selectedReason = null;
         let currentStep = 1;
 
-        // === ЗАГРУЗКА/СОХРАНЕНИЕ ===
         function loadState() {
-            const stored = localStorage.getItem('smokeTrackerLightTheme');
+            const stored = localStorage.getItem('quitSmoking_v1');
             if (stored) {
                 try {
                     const parsed = JSON.parse(stored);
                     state.smokeEvents = parsed.smokeEvents.map(e => ({
                         timestamp: new Date(e.timestamp),
-                        reason: e.reason || 'Без причины'
+                        reason: e.reason
                     }));
-                    state.minIntervalMinutes = parsed.minIntervalMinutes;
-                    state.dailyLimit = parsed.dailyLimit;
+                    state.minIntervalMinutes = parsed.minIntervalMinutes || 45;
+                    state.dailyLimit = parsed.dailyLimit || 5;
                     state.cigPrice = parsed.cigPrice || 200;
-                    state.onboardingComplete = parsed.onboardingComplete;
+                    state.onboardingComplete = parsed.onboardingComplete || false;
                     state.achievements = parsed.achievements || ACHIEVEMENTS.map(a => ({ ...a }));
                     if (parsed.lastSmokeTime) state.lastSmokeTime = new Date(parsed.lastSmokeTime);
                 } catch (e) {
-                    console.error('Ошибка загрузки:', e);
+                    console.error('Load error:', e);
                 }
             }
         }
 
         function saveState() {
-            const toSave = {
-                ...state,
-                smokeEvents: state.smokeEvents.map(e => ({
-                    timestamp: e.timestamp.toISOString(),
-                    reason: e.reason
-                })),
+            localStorage.setItem('quitSmoking_v1', JSON.stringify({
+                smokeEvents: state.smokeEvents.map(e => ({ timestamp: e.timestamp.toISOString(), reason: e.reason })),
+                minIntervalMinutes: state.minIntervalMinutes,
+                dailyLimit: state.dailyLimit,
+                cigPrice: state.cigPrice,
+                onboardingComplete: state.onboardingComplete,
+                achievements: state.achievements,
                 lastSmokeTime: state.lastSmokeTime ? state.lastSmokeTime.toISOString() : null
-            };
-            localStorage.setItem('smokeTrackerLightTheme', JSON.stringify(toSave));
+            }));
         }
 
-        // === ИНИЦИАЛИЗАЦИЯ ===
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
@@ -323,7 +297,6 @@
             document.getElementById('appScreen').style.display = 'block';
         }
 
-        // === ONBOARDING ===
         document.getElementById('nextOnboardingBtn').addEventListener('click', () => {
             if (currentStep === 1) {
                 state.dailyLimit = parseInt(document.getElementById('dailyLimitInput').value) || 5;
@@ -346,26 +319,19 @@
                 document.getElementById('onboardingScreen').style.display = 'none';
                 document.getElementById('appScreen').style.display = 'block';
                 showTip();
+                renderCalendar();
+                renderWeeklyChart();
                 updateUI();
             }
         });
 
-        document.querySelectorAll('.plan-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-            });
-        });
-
-        // === ВКЛАДКИ ===
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const tabName = btn.getAttribute('data-tab');
-                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 document.getElementById(tabName).classList.add('active');
                 btn.classList.add('active');
-
                 if (tabName === 'history') {
                     renderCalendar();
                     renderWeeklyChart();
@@ -375,7 +341,6 @@
             });
         });
 
-        // === СОВЕТЫ ===
         function showTip() {
             if (Math.random() > 0.4) {
                 const tip = TIPS[Math.floor(Math.random() * TIPS.length)];
@@ -384,7 +349,6 @@
             }
         }
 
-        // === МОДАЛЬ ===
         const reasonModal = document.getElementById('reasonModal');
         const reasonButtons = document.querySelectorAll('.reason-btn');
 
@@ -407,16 +371,12 @@
             saveState();
             updateUI();
             reasonModal.classList.remove('active');
-            if (Telegram.WebApp.HapticFeedback) {
-                Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-            }
         });
 
         document.getElementById('cancelReasonBtn').addEventListener('click', () => {
             reasonModal.classList.remove('active');
         });
 
-        // === КНОПКА ПОКУРИЛ ===
         document.getElementById('smokeBtn').addEventListener('click', () => {
             const now = new Date();
             if (state.lastSmokeTime) {
@@ -429,51 +389,29 @@
                     return;
                 }
             }
-            state.smokeEvents.push({
-                timestamp: now,
-                reason: 'По графику'
-            });
+            state.smokeEvents.push({ timestamp: now, reason: 'По графику' });
             state.lastSmokeTime = now;
             saveState();
             updateUI();
-            if (Telegram.WebApp.HapticFeedback) {
-                Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-            }
         });
 
-        // === ПАРАМЕТРЫ ===
         document.getElementById('editIntervalBtn').addEventListener('click', () => {
             const input = prompt('Интервал (мин):', state.minIntervalMinutes);
-            if (input && !isNaN(input)) {
-                state.minIntervalMinutes = parseInt(input);
-                saveState();
-                updateUI();
-            }
+            if (input && !isNaN(input)) { state.minIntervalMinutes = parseInt(input); saveState(); updateUI(); }
         });
 
         document.getElementById('editLimitBtn').addEventListener('click', () => {
-            const input = prompt('Дневной лимит:', state.dailyLimit);
-            if (input && !isNaN(input)) {
-                state.dailyLimit = parseInt(input);
-                saveState();
-                updateUI();
-            }
+            const input = prompt('Лимит:', state.dailyLimit);
+            if (input && !isNaN(input)) { state.dailyLimit = parseInt(input); saveState(); updateUI(); }
         });
 
         document.getElementById('editPriceBtn').addEventListener('click', () => {
-            const input = prompt('Цена пачки (₽):', state.cigPrice);
-            if (input && !isNaN(input)) {
-                state.cigPrice = parseInt(input);
-                saveState();
-                updateUI();
-            }
+            const input = prompt('Цена (₽):', state.cigPrice);
+            if (input && !isNaN(input)) { state.cigPrice = parseInt(input); saveState(); updateUI(); }
         });
 
         document.getElementById('resetBtn').addEventListener('click', () => {
-            if (confirm('Удалить все данные?')) {
-                localStorage.removeItem('smokeTrackerLightTheme');
-                location.reload();
-            }
+            if (confirm('Удалить данные?')) { localStorage.removeItem('quitSmoking_v1'); location.reload(); }
         });
 
         document.getElementById('exportBtn').addEventListener('click', () => {
@@ -486,7 +424,6 @@
             link.click();
         });
 
-        // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
         function getDateString(date) {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -507,12 +444,10 @@
             return { count, isSuccess: count <= state.dailyLimit };
         }
 
-        // === КАЛЕНДАРЬ ===
         function renderCalendar() {
             const year = currentCalendarDate.getFullYear();
             const month = currentCalendarDate.getMonth();
-            const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
-                           'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
             document.getElementById('calendarMonthYear').textContent = `${months[month]} ${year}`;
 
             const firstDay = new Date(year, month, 1).getDay();
@@ -537,13 +472,8 @@
                 dayEl.textContent = day;
 
                 const { count, isSuccess } = getDayStatistics(date);
-                if (count > 0) {
-                    dayEl.classList.add(isSuccess ? 'success' : 'danger');
-                }
-
-                if (isSameDay(date, today)) {
-                    dayEl.classList.add('selected');
-                }
+                if (count > 0) dayEl.classList.add(isSuccess ? 'success' : 'danger');
+                if (isSameDay(date, today)) dayEl.classList.add('selected');
 
                 dayEl.addEventListener('click', () => {
                     renderDateDetails(date, getEventsForDate(date));
@@ -569,18 +499,17 @@
             let html = '<div class="smokes-list"><div class="smokes-list-title">' + dateStr + '</div>';
             
             if (count === 0) {
-                html += '<div class="empty-state">Нет записей (✅ лимит выполнен)</div>';
+                html += '<div class="empty-state">Лимит выполнен ✅</div>';
             } else {
                 html += '<div class="empty-state">' + count + '/' + state.dailyLimit + ' ' + (isSuccess ? '✅' : '⚠️') + '</div>';
                 events.forEach((e, i) => {
                     const timeStr = e.timestamp.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-                    const reasonStr = e.reason || 'Без причины';
                     let interval = '';
                     if (i > 0) {
                         const diff = Math.round((e.timestamp - events[i-1].timestamp) / (1000 * 60));
                         interval = ' (+' + diff + ')';
                     }
-                    html += '<div class="smoke-item"><div class="smoke-item-time">' + timeStr + interval + '</div><div class="smoke-item-reason">📝 ' + reasonStr + '</div></div>';
+                    html += '<div class="smoke-item"><div class="smoke-item-time">' + timeStr + interval + '</div><div class="smoke-item-reason">📝 ' + (e.reason || 'Без причины') + '</div></div>';
                 });
             }
             
@@ -588,7 +517,6 @@
             container.innerHTML = html;
         }
 
-        // === ГРАФИК ===
         function renderWeeklyChart() {
             const chart = document.getElementById('weeklyChart');
             const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
@@ -600,20 +528,15 @@
                 date.setDate(date.getDate() - i);
                 const events = getEventsForDate(date).length;
                 const dayName = days[(date.getDay() + 6) % 7];
-                const percentage = Math.min(100, (events / state.dailyLimit) * 100);
+                const percentage = Math.max(4, Math.min(100, (events / state.dailyLimit) * 100));
                 const color = events <= state.dailyLimit ? '#2e7d32' : '#c62828';
                 
-                html += '<div class="chart-bar-container">' +
-                    '<div class="chart-bar" style="height: ' + percentage + '%; background: ' + color + ';"></div>' +
-                    '<div class="chart-label">' + dayName + '</div>' +
-                    '<div class="chart-value">' + events + '</div>' +
-                    '</div>';
+                html += '<div class="chart-bar-container"><div class="chart-bar" style="height: ' + percentage + '%; background: ' + color + ';"></div><div class="chart-label">' + dayName + '</div><div class="chart-value">' + events + '</div></div>';
             }
 
             chart.innerHTML = html;
         }
 
-        // === ДОСТИЖЕНИЯ ===
         function renderAchievements() {
             const container = document.getElementById('achievementsContainer');
             const daysClean = getCleanDays();
@@ -629,17 +552,12 @@
 
             let html = '';
             state.achievements.forEach(a => {
-                html += '<div class="achievement-card ' + (a.unlocked ? 'unlocked' : 'locked') + '">' +
-                    '<div class="achievement-icon">' + a.icon + '</div>' +
-                    '<div class="achievement-name">' + a.name + '</div>' +
-                    '<div class="achievement-desc">' + a.desc + '</div>' +
-                    '</div>';
+                html += '<div class="achievement-card ' + (a.unlocked ? 'unlocked' : 'locked') + '"><div class="achievement-icon">' + a.icon + '</div><div class="achievement-name">' + a.name + '</div><div class="achievement-desc">' + a.desc + '</div></div>';
             });
             
             container.innerHTML = html;
         }
 
-        // === ОБНОВЛЕНИЕ ТАЙМЕРА ===
         function updateTimer() {
             if (!state.lastSmokeTime) {
                 document.getElementById('timerDisplay').textContent = '00:00';
@@ -658,11 +576,9 @@
             const remaining = Math.max(0, (nextAllowedTime - now) / 1000);
             const minutes = Math.floor(remaining / 60);
             const seconds = Math.floor(remaining % 60);
-            document.getElementById('timerDisplay').textContent = 
-                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
 
-        // === ОБНОВЛЕНИЕ UI ===
         function getCleanDays() {
             const today = new Date();
             if (state.smokeEvents.length === 0) return 0;
@@ -676,11 +592,9 @@
             const moneySaved = Math.floor(state.smokeEvents.length * (state.cigPrice / 20));
             const daysClean = getCleanDays();
 
-            // Деньги
             document.getElementById('moneySaved').textContent = moneySaved + ' ₽';
             document.getElementById('cigsSaved').textContent = state.smokeEvents.length + ' шт';
 
-            // Статистика
             document.getElementById('daysClean').textContent = daysClean;
             document.getElementById('todayCount').textContent = todayEvents.length;
             
@@ -691,16 +605,14 @@
             }).length / 7);
             document.getElementById('weekAvg').textContent = weekAvg;
 
-            // Прогресс
             const percentage = Math.min(100, (todayEvents.length / state.dailyLimit) * 100);
             document.getElementById('progressFill').style.width = percentage + '%';
             document.getElementById('progressCount').textContent = todayEvents.length;
             document.getElementById('progressLimit').textContent = state.dailyLimit;
             
-            const status = todayEvents.length <= state.dailyLimit ? '✅ В пределах лимита' : '⚠️ Превышен лимит!';
+            const status = todayEvents.length <= state.dailyLimit ? '✅ В пределах' : '⚠️ Превышен!';
             document.getElementById('progressStatus').textContent = status;
 
-            // Кнопка
             const smokeBtn = document.getElementById('smokeBtn');
             const statusBadge = document.getElementById('statusBadge');
             let buttonDisabled = false;
@@ -717,10 +629,10 @@
                     
                     if (remainingMinutes > 5) {
                         statusClass = 'status-wait';
-                        statusText = `⏳ Подождите ${remainingMinutes} мин`;
+                        statusText = `⏳ ${remainingMinutes} мин`;
                     } else {
                         statusClass = 'status-soon';
-                        statusText = `⏱️ Скоро ${remainingMinutes} мин`;
+                        statusText = `⏱️ ${remainingMinutes} мин`;
                     }
                 } else {
                     document.getElementById('timerDisplay').textContent = '00:00';
@@ -733,7 +645,6 @@
             statusBadge.className = `status-badge ${statusClass}`;
             statusBadge.textContent = statusText;
 
-            // История
             const historyDiv = document.getElementById('history');
             if (todayEvents.length === 0) {
                 historyDiv.innerHTML = '<div class="empty-state">Нет записей 🎉</div>';
@@ -749,7 +660,6 @@
                 }).join('');
             }
 
-            // Параметры
             document.getElementById('currentLimitDisplay').textContent = state.dailyLimit;
             document.getElementById('currentIntervalDisplay').textContent = state.minIntervalMinutes;
             document.getElementById('currentPriceDisplay').textContent = state.cigPrice;
@@ -768,7 +678,6 @@
             saveState();
         }
 
-        // === НАВИГАЦИЯ ===
         document.getElementById('prevMonthBtn').addEventListener('click', () => {
             currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
             renderCalendar();
@@ -779,10 +688,11 @@
             renderCalendar();
         });
 
-        // === ИНИЦИАЛИЗАЦИЯ ===
         updateUI();
-        renderCalendar();
-        renderWeeklyChart();
+        if (state.onboardingComplete) {
+            renderCalendar();
+            renderWeeklyChart();
+        }
 
         setInterval(() => {
             updateTimer();
