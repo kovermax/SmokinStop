@@ -165,6 +165,7 @@
 
         let currentCalendarDate = new Date();
         let selectedReason = null;
+        let timerInterval = null;
 
         // Получение хранилища данных из localStorage
         function loadState() {
@@ -470,6 +471,29 @@
             container.innerHTML = html;
         }
 
+        // === ОБНОВЛЕНИЕ ТОЛЬКО ТАЙМЕРА (быстро) ===
+        function updateTimer() {
+            if (!state.lastSmokeTime) {
+                document.getElementById('timerDisplay').textContent = '00:00';
+                return;
+            }
+
+            const now = new Date();
+            const timeSinceLastSmoke = (now - state.lastSmokeTime) / (1000 * 60);
+            
+            if (timeSinceLastSmoke >= state.minIntervalMinutes) {
+                document.getElementById('timerDisplay').textContent = '00:00';
+                return;
+            }
+
+            const nextAllowedTime = new Date(state.lastSmokeTime.getTime() + state.minIntervalMinutes * 60 * 1000);
+            const remaining = Math.max(0, (nextAllowedTime - now) / 1000);
+            const minutes = Math.floor(remaining / 60);
+            const seconds = Math.floor(remaining % 60);
+            document.getElementById('timerDisplay').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
         // === ОСНОВНОЕ ОБНОВЛЕНИЕ UI ===
         function updateUI() {
             const today = new Date();
@@ -505,14 +529,6 @@
                         statusClass = 'status-soon';
                         statusText = `⏱️ Скоро (${remainingMinutes} мин)`;
                     }
-                    
-                    // Обновление таймера
-                    const nextAllowedTime = new Date(state.lastSmokeTime.getTime() + state.minIntervalMinutes * 60 * 1000);
-                    const remaining = Math.max(0, (nextAllowedTime - now) / 1000);
-                    const minutes = Math.floor(remaining / 60);
-                    const seconds = Math.floor(remaining % 60);
-                    document.getElementById('timerDisplay').textContent = 
-                        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
                 } else {
                     document.getElementById('timerDisplay').textContent = '00:00';
                 }
@@ -579,8 +595,14 @@
         updateUI();
         renderCalendar();
 
-        // Обновление таймера каждую секунду
-        setInterval(updateUI, 1000);
+        // Обновление таймера каждую секунду (легкое обновление)
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            updateTimer();
+        }, 1000);
+
+        // Полное обновление каждые 10 секунд
+        setInterval(updateUI, 10000);
     </script>
 </body>
 </html>
