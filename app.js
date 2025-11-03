@@ -30,7 +30,7 @@ let state = {
   lastSmokeTime: null,
   onboardingComplete: false,
   achievements: ACHIEVEMENTS.map(a => ({ ...a })),
-  plan: 30  // ВСЕГДА 30 ДНЕЙ - БЕЗ ВЫБОРА
+  plan: 30
 };
 
 let currentCalendarDate = new Date();
@@ -76,37 +76,70 @@ function saveState() {
 Telegram.WebApp.ready();
 Telegram.WebApp.expand();
 
-// === ONBOARDING ===
+// === ONBOARDING - ИСПРАВЛЕННО ===
 const nextBtn = document.getElementById("nextOnboardingBtn");
-nextBtn.addEventListener("click", () => {
+
+nextBtn.addEventListener("click", function() {
+  console.log("ONCLICK: currentStep =", currentStep);
+  
   if (currentStep === 1) {
+    console.log("STEP 1: Getting daily limit...");
     state.dailyLimit = parseInt(document.getElementById("dailyLimitInput").value, 10) || 5;
+    console.log("Daily limit set to:", state.dailyLimit);
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
     currentStep = 2;
+    console.log("Now on STEP 2");
     return;
   }
+  
   if (currentStep === 2) {
+    console.log("STEP 2: Getting interval...");
     state.minIntervalMinutes = parseInt(document.getElementById("minIntervalInput").value, 10) || 45;
+    console.log("Interval set to:", state.minIntervalMinutes);
     document.getElementById("step2").style.display = "none";
     document.getElementById("step3").style.display = "block";
     currentStep = 3;
+    console.log("Now on STEP 3");
     return;
   }
+  
   if (currentStep === 3) {
+    console.log("STEP 3: Getting price and finishing...");
     state.cigPrice = parseInt(document.getElementById("cigPriceInput").value, 10) || 200;
-    // ПРОПУСКАЕМ ШАГ 4 С ВЫБОРОМ ПЛАНА
-    // СРАЗУ ЗАВЕРШАЕМ ОНБОРДИНГ
-    state.plan = 30;  // ВСЕГДА 30 ДНЕЙ
+    console.log("Price set to:", state.cigPrice);
+    state.plan = 30;
+    console.log("Plan set to: 30 days");
     state.onboardingComplete = true;
+    console.log("Onboarding marked as complete");
+    
+    // СОХРАНЯЕМ
     saveState();
-    document.getElementById("onboardingScreen").style.display = "none";
-    document.getElementById("appScreen").style.display = "block";
+    console.log("State saved to localStorage");
+    
+    // СКРЫВАЕМ ОНБОРДИНГ
+    const onboardingElement = document.getElementById("onboardingScreen");
+    console.log("onboardingScreen element:", onboardingElement);
+    onboardingElement.style.display = "none";
+    console.log("Onboarding hidden");
+    
+    // ПОКАЗЫВАЕМ ПРИЛОЖЕНИЕ
+    const appElement = document.getElementById("appScreen");
+    console.log("appScreen element:", appElement);
+    appElement.style.display = "block";
+    console.log("App shown");
+    
+    // ИНИЦИАЛИЗИРУЕМ
     currentCalendarDate = new Date();
     renderCalendar();
+    console.log("Calendar rendered");
     renderWeeklyChart();
+    console.log("Weekly chart rendered");
     showTip();
+    console.log("Tip shown");
     updateUI();
+    console.log("UI updated");
+    console.log("=== ONBOARDING COMPLETE ===");
     return;
   }
 });
@@ -483,15 +516,23 @@ document.getElementById("nextMonthBtn").addEventListener("click", () => {
 });
 
 // === INIT ===
+console.log("Script starting...");
 loadState();
+console.log("State loaded. onboardingComplete:", state.onboardingComplete);
+
 if (state.onboardingComplete) {
+  console.log("Already completed onboarding, showing app");
   document.getElementById("onboardingScreen").style.display = "none";
   document.getElementById("appScreen").style.display = "block";
   currentCalendarDate = new Date();
   renderCalendar();
   renderWeeklyChart();
   showTip();
+} else {
+  console.log("First time, showing onboarding");
 }
+
 updateUI();
 setInterval(updateTimer, 1000);
 setInterval(updateUI, 10000);
+console.log("Script initialized");

@@ -13,24 +13,28 @@
 </head>
 <body style="background: #ffffff !important; color: #1a1a1a !important;">
   <div class="container">
-    <!-- ONBOARDING: ТОЛЬКО 3 ШАГА (без выбора плана) -->
+    <!-- ONBOARDING -->
     <div id="onboardingScreen" class="onboarding-screen active">
       <div class="onboarding-content">
         <div class="onboarding-header">🚭 Бросить курить</div>
         <div class="onboarding-subtitle">Твой путь к здоровой жизни</div>
+        
         <div class="onboarding-step" id="step1">
           <div class="step-title">📊 Сколько сигарет в день?</div>
           <input type="number" id="dailyLimitInput" min="1" max="100" value="5" class="modal-input" />
         </div>
+        
         <div class="onboarding-step" id="step2" style="display:none;">
           <div class="step-title">⏱️ Интервал между перекурами (мин)?</div>
           <input type="number" id="minIntervalInput" min="5" max="300" value="45" class="modal-input" />
         </div>
+        
         <div class="onboarding-step" id="step3" style="display:none;">
           <div class="step-title">💰 Цена пачки сигарет (₽)?</div>
           <input type="number" id="cigPriceInput" min="1" max="1000" value="200" class="modal-input" />
         </div>
-        <button class="btn btn-primary" id="nextOnboardingBtn" style="margin-top:24px;">Далее →</button>
+        
+        <button class="btn btn-primary" id="nextOnboardingBtn" style="margin-top:24px; width: 100%; cursor: pointer;">Далее →</button>
       </div>
     </div>
 
@@ -40,10 +44,12 @@
         <h1>🚭 Бросить курить</h1>
         <p>Ты молодец! Продолжай!</p>
       </div>
+      
       <div class="tip-card" id="tipCard" style="display:none;">
         <div class="tip-icon">💡</div>
         <div class="tip-text" id="tipText"></div>
       </div>
+      
       <div class="tabs-container">
         <button class="tab-btn active" data-tab="home">📊 Главная</button>
         <button class="tab-btn" data-tab="history">📈 История</button>
@@ -61,6 +67,7 @@
             <div class="money-sublabel" id="cigsSaved">0 шт</div>
           </div>
         </div>
+        
         <div class="stats">
           <div class="stat-row">
             <div class="stat-item">
@@ -77,17 +84,20 @@
             </div>
           </div>
         </div>
+        
         <div class="daily-progress">
           <div class="progress-header">Лимит: <span id="progressCount">0</span>/<span id="progressLimit">5</span></div>
           <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
           <div class="progress-status" id="progressStatus">✅ В пределах</div>
         </div>
+        
         <div class="timer-section">
           <div class="timer-label">Следующий перекур через</div>
           <div class="timer-display" id="timerDisplay">00:00</div>
-          <button class="btn btn-primary" id="smokeBtn">Покурил 🚬</button>
+          <button class="btn btn-primary" id="smokeBtn" style="cursor: pointer;">Покурил 🚬</button>
           <div id="statusBadge" class="status-badge status-allowed">✓ Можно курить</div>
         </div>
+        
         <div class="smokes-list">
           <div class="smokes-list-title">Сегодня</div>
           <div id="todayList"></div>
@@ -100,6 +110,7 @@
           <div class="chart-title">📊 За неделю</div>
           <div class="chart-bars" id="weeklyChart"></div>
         </div>
+        
         <div class="calendar">
           <div class="calendar-header">
             <h3 id="calendarMonthYear">Месяц</h3>
@@ -114,6 +125,7 @@
           </div>
           <div class="days" id="calendarDays"></div>
         </div>
+        
         <div id="selectedDateSmokes"></div>
       </div>
 
@@ -127,30 +139,33 @@
         <div class="settings-section">
           <div class="settings-row">
             <span class="settings-label">Дневной лимит</span>
-            <button class="btn-edit" id="editLimitBtn">Изменить</button>
+            <button class="btn-edit" id="editLimitBtn" style="cursor: pointer;">Изменить</button>
           </div>
           <div class="settings-row">
             <span class="settings-value" id="currentLimitDisplay">5</span>
           </div>
         </div>
+        
         <div class="settings-section">
           <div class="settings-row">
             <span class="settings-label">Интервал (мин)</span>
-            <button class="btn-edit" id="editIntervalBtn">Изменить</button>
+            <button class="btn-edit" id="editIntervalBtn" style="cursor: pointer;">Изменить</button>
           </div>
           <div class="settings-row">
             <span class="settings-value" id="currentIntervalDisplay">45</span>
           </div>
         </div>
+        
         <div class="settings-section">
           <div class="settings-row">
             <span class="settings-label">Цена пачки (₽)</span>
-            <button class="btn-edit" id="editPriceBtn">Изменить</button>
+            <button class="btn-edit" id="editPriceBtn" style="cursor: pointer;">Изменить</button>
           </div>
           <div class="settings-row">
             <span class="settings-value" id="currentPriceDisplay">200</span>
           </div>
         </div>
+        
         <div class="settings-section">
           <div class="settings-row">
             <span class="settings-label">Статистика</span>
@@ -162,8 +177,9 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-secondary" id="exportBtn">📥 Экспорт</button>
-        <button class="btn btn-secondary" id="resetBtn">🔄 Сброс</button>
+        
+        <button class="btn btn-secondary" id="exportBtn" style="cursor: pointer;">📥 Экспорт</button>
+        <button class="btn btn-secondary" id="resetBtn" style="cursor: pointer;">🔄 Сброс</button>
       </div>
     </div>
   </div>
@@ -175,23 +191,23 @@
       <div class="modal-body">
         <label class="modal-label">Выбери или напиши:</label>
         <div class="reason-buttons">
-          <button class="reason-btn" data-reason="Стресс">😰 Стресс</button>
-          <button class="reason-btn" data-reason="Социум">👥 Люди</button>
-          <button class="reason-btn" data-reason="Скука">😑 Скука</button>
-          <button class="reason-btn" data-reason="Привычка">🔄 Привычка</button>
-          <button class="reason-btn" data-reason="Алкоголь">🍺 Спиртное</button>
-          <button class="reason-btn" data-reason="Кофе">☕ Кофе</button>
+          <button class="reason-btn" data-reason="Стресс" style="cursor: pointer;">😰 Стресс</button>
+          <button class="reason-btn" data-reason="Социум" style="cursor: pointer;">👥 Люди</button>
+          <button class="reason-btn" data-reason="Скука" style="cursor: pointer;">😑 Скука</button>
+          <button class="reason-btn" data-reason="Привычка" style="cursor: pointer;">🔄 Привычка</button>
+          <button class="reason-btn" data-reason="Алкоголь" style="cursor: pointer;">🍺 Спиртное</button>
+          <button class="reason-btn" data-reason="Кофе" style="cursor: pointer;">☕ Кофе</button>
         </div>
         <textarea class="modal-input" id="reasonInput" placeholder="Или напиши..."></textarea>
       </div>
       <div class="modal-buttons">
-        <button class="btn btn-secondary" id="cancelReasonBtn">Отмена</button>
-        <button class="btn btn-primary" id="confirmReasonBtn">OK</button>
+        <button class="btn btn-secondary" id="cancelReasonBtn" style="cursor: pointer;">Отмена</button>
+        <button class="btn btn-primary" id="confirmReasonBtn" style="cursor: pointer;">OK</button>
       </div>
     </div>
   </div>
 
-  <!-- Подключаем исправленный скрипт -->
+  <!-- Подключаем скрипт -->
   <script src="app.js"></script>
 </body>
 </html>
