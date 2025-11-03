@@ -3,89 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Бросить курить</title>
+  <title>Quit Smoking</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- SCREEN 1: ONBOARDING -->
-<div id="onboarding">
-  <div class="onboarding-box">
+<!-- ONBOARDING -->
+<div id="onb">
+  <div class="card-lg">
     <h1>🚭 Бросить курить</h1>
-    <p>Твой путь к здоровой жизни</p>
+    <p class="sub">Твой путь к здоровой жизни</p>
     
-    <div id="onb-step-1" class="onb-step">
-      <label>Сколько сигарет в день?</label>
-      <input type="number" id="onb-input-1" value="10" min="1" max="100">
+    <div id="onb1" class="step">
+      <label>Сигарет в день?</label>
+      <input type="number" id="i1" value="10" min="1">
+    </div>
+    <div id="onb2" class="step" style="display:none">
+      <label>Интервал (мин)?</label>
+      <input type="number" id="i2" value="45" min="5">
+    </div>
+    <div id="onb3" class="step" style="display:none">
+      <label>Цена пачки (₽)?</label>
+      <input type="number" id="i3" value="200" min="1">
     </div>
     
-    <div id="onb-step-2" class="onb-step" style="display:none">
-      <label>Интервал между перекурами (минуты)</label>
-      <input type="number" id="onb-input-2" value="45" min="5" max="300">
-    </div>
-    
-    <div id="onb-step-3" class="onb-step" style="display:none">
-      <label>Цена пачки (рубли)</label>
-      <input type="number" id="onb-input-3" value="200" min="1" max="1000">
-    </div>
-    
-    <button id="onb-next-btn">Далее →</button>
+    <button id="btn-next" class="btn">Далее →</button>
   </div>
 </div>
 
-<!-- SCREEN 2: APP -->
-<div id="app-screen" style="display:none">
-  <div class="header">
+<!-- APP -->
+<div id="app" style="display:none">
+  <header>
     <h1>🚭 Бросить курить</h1>
-    <p>Ты молодец! Продолжай!</p>
+    <p class="sub">Молодец! Продолжай!</p>
+  </header>
+
+  <div id="tip" class="tip" style="display:none">💡 <span id="tip-text"></span></div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="0">📊</button>
+    <button class="tab" data-tab="1">📈</button>
+    <button class="tab" data-tab="2">🏆</button>
+    <button class="tab" data-tab="3">⚙️</button>
   </div>
 
-  <div id="tip-box" class="tip-box" style="display:none">
-    <span>💡 </span><span id="tip-text"></span>
-  </div>
-
-  <div class="tab-buttons">
-    <button class="tab-btn active" data-idx="0">📊</button>
-    <button class="tab-btn" data-idx="1">📈</button>
-    <button class="tab-btn" data-idx="2">🏆</button>
-    <button class="tab-btn" data-idx="3">⚙️</button>
-  </div>
-
-  <!-- TAB 0: HOME -->
-  <div class="tab-view">
-    <div class="card card-savings">
+  <!-- TAB 0 -->
+  <div class="tab-view active">
+    <div class="card grad">
       <div>💰 Сэкономлено</div>
-      <div id="savings-amount">0 ₽</div>
-      <div id="savings-cigs">0 шт</div>
+      <div id="saved" class="big">0 ₽</div>
+      <div id="count">0 шт</div>
     </div>
 
-    <div class="card card-stats">
-      <div class="stat-box">
-        <div id="stat-clean">0</div>
-        <div>Дней без</div>
+    <div class="card grid3">
+      <div class="stat">
+        <div id="days" class="num">0</div>
+        <div>Дней</div>
       </div>
-      <div class="stat-box">
-        <div id="stat-today">0</div>
+      <div class="stat">
+        <div id="today" class="num">0</div>
         <div>Сегодня</div>
       </div>
-      <div class="stat-box">
-        <div id="stat-week">0</div>
+      <div class="stat">
+        <div id="week" class="num">0</div>
         <div>Неделя</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="progress-label">Лимит: <span id="progress-text">0/10</span></div>
-      <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
-      <div id="progress-status">✅ OK</div>
+      <div class="flex2">
+        <span>Лимит:</span>
+        <span id="prog-text">0/10</span>
+      </div>
+      <div class="bar"><div id="fill"></div></div>
+      <div id="status" class="center">✅ OK</div>
     </div>
 
-    <div class="card card-timer">
-      <div>Следующий перекур через:</div>
-      <div id="timer-display">00:00</div>
-      <button id="smoke-btn">Покурил 🚬</button>
-      <div id="timer-status">✓ Можно</div>
+    <div class="card center grad">
+      <div>Следующий перекур</div>
+      <div id="timer" class="big-timer">00:00</div>
+      <button id="btn-smoke" class="btn">Покурил 🚬</button>
+      <div id="ts" class="small-status">✓ Можно</div>
     </div>
 
     <div class="card">
@@ -94,87 +93,78 @@
     </div>
   </div>
 
-  <!-- TAB 1: HISTORY -->
+  <!-- TAB 1 -->
   <div class="tab-view" style="display:none">
     <div class="card">
       <h3>График</h3>
       <div id="chart" class="chart"></div>
     </div>
 
-    <div class="card card-calendar">
-      <div class="cal-header">
+    <div class="card">
+      <div class="flex2">
         <h3 id="cal-month">Месяц</h3>
         <div>
-          <button id="cal-prev" class="btn-small">◀</button>
-          <button id="cal-next" class="btn-small">▶</button>
+          <button id="cal-p" class="btn-sm">◀</button>
+          <button id="cal-n" class="btn-sm">▶</button>
         </div>
       </div>
-      <div class="cal-weekdays">
+      <div class="cal-wd">
         <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
       </div>
-      <div id="cal-days" class="cal-days"></div>
+      <div id="cal-days" class="cal"></div>
     </div>
 
-    <div id="date-details"></div>
+    <div id="day-info"></div>
   </div>
 
-  <!-- TAB 2: ACHIEVEMENTS -->
+  <!-- TAB 2 -->
   <div class="tab-view" style="display:none">
-    <div id="achievements-grid" class="achievements-grid"></div>
+    <div id="ach" class="grid2"></div>
   </div>
 
-  <!-- TAB 3: SETTINGS -->
+  <!-- TAB 3 -->
   <div class="tab-view" style="display:none">
     <div class="card">
-      <div class="setting-row">
-        <span>Дневной лимит</span>
-        <button id="edit-limit" class="btn-small">Изменить</button>
-      </div>
-      <div id="setting-limit">10 сигарет</div>
+      <div class="flex2"><span>Лимит</span><button id="e-limit" class="btn-sm">Изменить</button></div>
+      <div id="val-limit">10 сигарет</div>
     </div>
 
     <div class="card">
-      <div class="setting-row">
-        <span>Интервал (мин)</span>
-        <button id="edit-interval" class="btn-small">Изменить</button>
-      </div>
-      <div id="setting-interval">45 минут</div>
+      <div class="flex2"><span>Интервал</span><button id="e-int" class="btn-sm">Изменить</button></div>
+      <div id="val-int">45 минут</div>
     </div>
 
     <div class="card">
-      <div class="setting-row">
-        <span>Цена пачки</span>
-        <button id="edit-price" class="btn-small">Изменить</button>
-      </div>
-      <div id="setting-price">200 ₽</div>
+      <div class="flex2"><span>Цена</span><button id="e-price" class="btn-sm">Изменить</button></div>
+      <div id="val-price">200 ₽</div>
     </div>
 
     <div class="card">
-      <div class="setting-stat"><span>Всего:</span> <span id="stat-total">0</span></div>
-      <div class="setting-stat"><span>В день:</span> <span id="stat-avg">0</span></div>
+      <div class="flex2"><span>Всего:</span><span id="total">0</span></div>
+      <div class="flex2"><span>В день:</span><span id="avg">0</span></div>
     </div>
 
-    <button id="export-btn">📥 Экспорт</button>
-    <button id="reset-btn">🔄 Сброс</button>
+    <button id="btn-export" class="btn">📥 Экспорт</button>
+    <button id="btn-reset" class="btn btn-danger">🔄 Сброс</button>
   </div>
 </div>
 
 <!-- MODAL -->
-<div id="modal-reason" style="display:none">
-  <div class="modal-content">
-    <h2>Почему курил?</h2>
-    <div class="reason-buttons">
-      <button class="reason-btn" data-reason="Стресс">😰</button>
-      <button class="reason-btn" data-reason="Люди">👥</button>
-      <button class="reason-btn" data-reason="Скука">😑</button>
-      <button class="reason-btn" data-reason="Привычка">🔄</button>
-      <button class="reason-btn" data-reason="Алкоголь">🍺</button>
-      <button class="reason-btn" data-reason="Кофе">☕</button>
+<div id="modal" style="display:none">
+  <div class="modal-box">
+    <h2>Почему?</h2>
+    <div class="reasons">
+      <button class="reason" data-r="Стресс">😰</button>
+      <button class="reason" data-r="Люди">👥</button>
+      <button class="reason" data-r="Скука">😑</button>
+      <button class="reason" data-r="Привычка">🔄</button>
+      <button class="reason" data-r="Алкоголь">🍺</button>
+      <button class="reason" data-r="Кофе">☕</button>
     </div>
     <textarea id="reason-text" placeholder="Или напиши..."></textarea>
-    <div class="modal-buttons">
-      <button id="modal-cancel">Отмена</button>
-      <button id="modal-confirm">OK</button>
+    <div class="flex2">
+      <button id="m-cancel" class="btn">Отмена</button>
+      <button id="m-ok" class="btn">OK</button>
     </div>
   </div>
 </div>
