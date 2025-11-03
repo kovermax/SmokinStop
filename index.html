@@ -16,7 +16,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--tg-color-bg, #ffffff);
             color: var(--tg-color-text, #000000);
-            padding: 16px;
+            padding: 16px 16px 80px 16px;
         }
 
         .container {
@@ -24,9 +24,55 @@
             margin: 0 auto;
         }
 
+        /* Навигация между вкладками */
+        .tabs-container {
+            display: flex;
+            gap: 0;
+            margin-bottom: 24px;
+            background: var(--tg-color-secondary-bg, #f5f5f5);
+            border-radius: 8px;
+            padding: 4px;
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            background: transparent;
+            color: var(--tg-color-hint, #999999);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--tg-color-bg, #ffffff);
+            color: var(--tg-color-text, #000000);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .header {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         .header h1 {
@@ -52,6 +98,10 @@
             display: flex;
             justify-content: space-around;
             margin-bottom: 12px;
+        }
+
+        .stat-row:last-child {
+            margin-bottom: 0;
         }
 
         .stat-item {
@@ -152,18 +202,150 @@
             opacity: 0.8;
         }
 
-        .history-section {
+        /* История и календарь */
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .history-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--tg-color-text, #000000);
+        }
+
+        .date-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .date-nav-btn {
+            background: var(--tg-color-secondary-bg, #f5f5f5);
+            border: 1px solid var(--tg-color-hint, #ddd);
+            color: var(--tg-color-text, #000000);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .date-nav-btn:active {
+            opacity: 0.8;
+        }
+
+        .selected-date {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--tg-color-text, #000000);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .calendar {
+            background: var(--tg-color-secondary-bg, #f5f5f5);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .calendar-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--tg-color-text, #000000);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .calendar-nav-btn {
+            background: transparent;
+            border: none;
+            color: #31a24c;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .weekday {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--tg-color-hint, #999999);
+            padding: 4px 0;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            background: var(--tg-color-bg, #ffffff);
+            border: 1px solid var(--tg-color-hint, #ddd);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--tg-color-text, #000000);
+        }
+
+        .day:hover {
+            background: var(--tg-color-hint, #f0f0f0);
+        }
+
+        .day.other-month {
+            color: var(--tg-color-hint, #999999);
+            opacity: 0.5;
+        }
+
+        .day.has-smokes {
+            background: #fecaca;
+            border-color: #ef4444;
+            font-weight: 600;
+        }
+
+        .day.selected {
+            background: #31a24c;
+            color: white;
+            border-color: #31a24c;
+        }
+
+        .smokes-list {
             margin-top: 24px;
         }
 
-        .history-title {
+        .smokes-list-title {
             font-size: 14px;
             font-weight: 600;
             color: var(--tg-color-text, #000000);
             margin-bottom: 12px;
         }
 
-        .history-item {
+        .smoke-item {
             padding: 12px;
             background: var(--tg-color-secondary-bg, #f5f5f5);
             border-radius: 8px;
@@ -174,14 +356,109 @@
             align-items: center;
         }
 
-        .history-time {
+        .smoke-item-time {
+            font-weight: 600;
+            color: var(--tg-color-text, #000000);
+        }
+
+        .smoke-item-interval {
             color: var(--tg-color-hint, #999999);
+            font-size: 12px;
+        }
+
+        .smoke-item-badge {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .interval-good {
+            background: #dcfce7;
+            color: #31a24c;
+        }
+
+        .interval-warning {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .interval-bad {
+            background: #fee2e2;
+            color: #ef4444;
         }
 
         .empty-state {
             text-align: center;
             padding: 32px 16px;
             color: var(--tg-color-hint, #999999);
+            font-size: 14px;
+        }
+
+        .settings-section {
+            background: var(--tg-color-secondary-bg, #f5f5f5);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--tg-color-hint, #ddd);
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--tg-color-text, #000000);
+        }
+
+        .settings-value {
+            font-size: 14px;
+            color: var(--tg-color-hint, #999999);
+        }
+
+        .btn-edit {
+            background: transparent;
+            color: #31a24c;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--tg-color-secondary-bg, #f5f5f5);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-card-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #31a24c;
+        }
+
+        .stat-card-label {
+            font-size: 11px;
+            color: var(--tg-color-hint, #999999);
+            margin-top: 4px;
         }
     </style>
 </head>
@@ -192,40 +469,128 @@
             <p>Отслеживание и постепенное сокращение</p>
         </div>
 
-        <div class="stats">
-            <div class="stat-row">
-                <div class="stat-item">
-                    <div class="stat-value" id="daysClean">0</div>
-                    <div class="stat-label">Дней без сигарет</div>
+        <!-- Вкладки навигации -->
+        <div class="tabs-container">
+            <button class="tab-btn active" data-tab="home">📊 Главная</button>
+            <button class="tab-btn" data-tab="history">📅 История</button>
+            <button class="tab-btn" data-tab="settings">⚙️ Параметры</button>
+        </div>
+
+        <!-- TAB: Главная -->
+        <div id="home" class="tab-content active">
+            <div class="stats">
+                <div class="stat-row">
+                    <div class="stat-item">
+                        <div class="stat-value" id="daysClean">0</div>
+                        <div class="stat-label">Дней без сигарет</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayCount">0</div>
+                        <div class="stat-label">Сегодня курил</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="todayCount">0</div>
-                    <div class="stat-label">Сегодня курил</div>
+                <div class="stat-row">
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgInterval">0</div>
+                        <div class="stat-label">Средний интервал (мин)</div>
+                    </div>
                 </div>
             </div>
-            <div class="stat-row">
-                <div class="stat-item">
-                    <div class="stat-value" id="avgInterval">0</div>
-                    <div class="stat-label">Средний интервал (мин)</div>
-                </div>
+
+            <div class="timer-section">
+                <div class="timer-label">Следующий перекур разрешён через</div>
+                <div class="timer-display" id="timerDisplay">00:00</div>
+                <div id="statusBadge" class="status-badge status-allowed">✓ Можно курить</div>
+                <button class="btn btn-primary" id="smokeBtn">Покурил 🚬</button>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" id="statsBtn">📈 Статистика</button>
+            </div>
+
+            <div id="todayHistory" class="smokes-list">
+                <div class="smokes-list-title">История сегодня</div>
+                <div id="history"></div>
             </div>
         </div>
 
-        <div class="timer-section">
-            <div class="timer-label">Следующий перекур разрешён через</div>
-            <div class="timer-display" id="timerDisplay">00:00</div>
-            <div id="statusBadge" class="status-badge status-allowed">✓ Можно курить</div>
-            <button class="btn btn-primary" id="smokeBtn">Покурил 🚬</button>
+        <!-- TAB: История с календарём -->
+        <div id="history" class="tab-content">
+            <div class="history-header">
+                <h2>История перекуров</h2>
+                <div class="date-nav">
+                    <button class="date-nav-btn" id="prevDateBtn">← Назад</button>
+                    <div class="selected-date" id="selectedDateDisplay">Сегодня</div>
+                    <button class="date-nav-btn" id="nextDateBtn">Вперед →</button>
+                </div>
+            </div>
+
+            <div class="calendar">
+                <div class="calendar-header">
+                    <h3 id="calendarMonthYear">Ноябрь 2025</h3>
+                    <div class="calendar-nav">
+                        <button class="calendar-nav-btn" id="prevMonthBtn">‹</button>
+                        <button class="calendar-nav-btn" id="nextMonthBtn">›</button>
+                    </div>
+                </div>
+                <div class="weekdays">
+                    <div class="weekday">Пн</div>
+                    <div class="weekday">Вт</div>
+                    <div class="weekday">Ср</div>
+                    <div class="weekday">Чт</div>
+                    <div class="weekday">Пт</div>
+                    <div class="weekday">Сб</div>
+                    <div class="weekday">Вс</div>
+                </div>
+                <div class="days" id="calendarDays"></div>
+            </div>
+
+            <div id="selectedDateSmokes"></div>
         </div>
 
-        <div class="button-group">
-            <button class="btn btn-secondary" id="resetBtn">Сброс дня</button>
-            <button class="btn btn-secondary" id="settingsBtn">⚙️ Параметры</button>
-        </div>
+        <!-- TAB: Параметры -->
+        <div id="settings" class="tab-content">
+            <div class="settings-section">
+                <div class="settings-row">
+                    <span class="settings-label">Минимальный интервал (мин)</span>
+                    <button class="btn-edit" id="editIntervalBtn">Изменить</button>
+                </div>
+                <div class="settings-row">
+                    <span class="settings-label">Текущее значение</span>
+                    <span class="settings-value" id="currentIntervalDisplay">45</span>
+                </div>
+            </div>
 
-        <div class="history-section">
-            <div class="history-title">История сегодня</div>
-            <div id="history"></div>
+            <div class="settings-section">
+                <div class="settings-row">
+                    <span class="settings-label">Дневной лимит курения</span>
+                    <button class="btn-edit" id="editLimitBtn">Изменить</button>
+                </div>
+                <div class="settings-row">
+                    <span class="settings-label">Текущее значение</span>
+                    <span class="settings-value" id="currentLimitDisplay">Не установлен</span>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="settings-row">
+                    <span class="settings-label">Статистика</span>
+                </div>
+                <div style="padding: 12px 0;">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="totalSmokes">0</div>
+                            <div class="stat-card-label">Всего покурил</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="avgDay">0</div>
+                            <div class="stat-card-label">В среднем/день</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" id="exportBtn">📥 Экспортировать данные</button>
         </div>
     </div>
 
@@ -238,9 +603,13 @@
         let state = {
             smokeEvents: [],
             minIntervalMinutes: 45,
+            dailyLimit: null,
             lastSmokeTime: null,
             startDate: null
         };
+
+        let currentViewDate = new Date();
+        let currentCalendarDate = new Date();
 
         // Получение хранилища данных из localStorage
         function loadState() {
@@ -262,6 +631,27 @@
             localStorage.setItem('smokeTrackerState', JSON.stringify(state));
         }
 
+        // Обработка кликов на вкладки
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.getAttribute('data-tab');
+                
+                // Скрыть все вкладки
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                
+                // Показать выбранную вкладку
+                document.getElementById(tabName).classList.add('active');
+                btn.classList.add('active');
+
+                // Если открыли историю, обновить календарь
+                if (tabName === 'history') {
+                    renderCalendar();
+                    updateSelectedDateDisplay();
+                }
+            });
+        });
+
         // Обработка нажатия кнопки "Покурил"
         document.getElementById('smokeBtn').addEventListener('click', () => {
             const now = new Date();
@@ -276,21 +666,30 @@
             }
         });
 
-        // Обработка кнопки "Сброс дня"
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            state.smokeEvents = state.smokeEvents.filter(e => {
-                const eDate = new Date(e);
-                eDate.setHours(0, 0, 0, 0);
-                return eDate < today;
-            });
-            saveState();
-            updateUI();
+        // Навигация по датам в истории
+        document.getElementById('prevDateBtn').addEventListener('click', () => {
+            currentViewDate.setDate(currentViewDate.getDate() - 1);
+            updateSelectedDateDisplay();
         });
 
-        // Обработка кнопки "Параметры"
-        document.getElementById('settingsBtn').addEventListener('click', () => {
+        document.getElementById('nextDateBtn').addEventListener('click', () => {
+            currentViewDate.setDate(currentViewDate.getDate() + 1);
+            updateSelectedDateDisplay();
+        });
+
+        // Навигация по месяцам в календаре
+        document.getElementById('prevMonthBtn').addEventListener('click', () => {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+            renderCalendar();
+        });
+
+        document.getElementById('nextMonthBtn').addEventListener('click', () => {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+            renderCalendar();
+        });
+
+        // Параметры
+        document.getElementById('editIntervalBtn').addEventListener('click', () => {
             const input = prompt('Минимальный интервал (минуты):', state.minIntervalMinutes);
             if (input && !isNaN(input)) {
                 state.minIntervalMinutes = parseInt(input);
@@ -299,24 +698,190 @@
             }
         });
 
-        // Обновление интерфейса
+        document.getElementById('editLimitBtn').addEventListener('click', () => {
+            const input = prompt('Дневной лимит (сигарет, или оставьте пусто):');
+            if (input !== null) {
+                state.dailyLimit = input ? parseInt(input) : null;
+                saveState();
+                updateUI();
+            }
+        });
+
+        // Экспорт данных
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const dataStr = JSON.stringify(state, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `smoking-tracker-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        });
+
+        // Вспомогательные функции
+        function getDateString(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function isSameDay(date1, date2) {
+            return getDateString(date1) === getDateString(date2);
+        }
+
+        function getEventsForDate(date) {
+            return state.smokeEvents.filter(e => isSameDay(e, date));
+        }
+
+        function getEventsForMonth(month, year) {
+            return state.smokeEvents.filter(e => {
+                const d = new Date(e);
+                return d.getMonth() === month && d.getFullYear() === year;
+            });
+        }
+
+        // Рендеринг календаря
+        function renderCalendar() {
+            const year = currentCalendarDate.getFullYear();
+            const month = currentCalendarDate.getMonth();
+            
+            // Обновляем заголовок
+            const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
+                           'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            document.getElementById('calendarMonthYear').textContent = `${months[month]} ${year}`;
+
+            // Получаем количество дней в месяце и первый день недели
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const daysContainer = document.getElementById('calendarDays');
+            daysContainer.innerHTML = '';
+
+            // Дни из предыдущего месяца
+            for (let i = firstDay === 0 ? 6 : firstDay - 1; i > 0; i--) {
+                const day = daysInPrevMonth - i + 1;
+                const dayEl = document.createElement('div');
+                dayEl.className = 'day other-month';
+                dayEl.textContent = day;
+                daysContainer.appendChild(dayEl);
+            }
+
+            // Дни текущего месяца
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dayEl = document.createElement('div');
+                dayEl.className = 'day';
+                dayEl.textContent = day;
+
+                if (getEventsForDate(date).length > 0) {
+                    dayEl.classList.add('has-smokes');
+                }
+
+                if (isSameDay(date, currentViewDate)) {
+                    dayEl.classList.add('selected');
+                }
+
+                dayEl.addEventListener('click', () => {
+                    currentViewDate = new Date(date);
+                    renderCalendar();
+                    updateSelectedDateDisplay();
+                });
+
+                daysContainer.appendChild(dayEl);
+            }
+
+            // Дни из следующего месяца
+            const totalCells = daysContainer.children.length;
+            const remainingCells = 42 - totalCells;
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'day other-month';
+                dayEl.textContent = day;
+                daysContainer.appendChild(dayEl);
+            }
+        }
+
+        // Обновление отображения выбранной даты и списка перекуров
+        function updateSelectedDateDisplay() {
+            const today = new Date();
+            let displayText = '';
+            
+            if (isSameDay(currentViewDate, today)) {
+                displayText = 'Сегодня';
+            } else if (isSameDay(currentViewDate, new Date(today.getTime() - 24 * 60 * 60 * 1000))) {
+                displayText = 'Вчера';
+            } else {
+                const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+                displayText = currentViewDate.toLocaleDateString('ru-RU', { 
+                    day: 'numeric', 
+                    month: 'short',
+                    weekday: 'short'
+                });
+            }
+            
+            document.getElementById('selectedDateDisplay').textContent = displayText;
+
+            // Обновляем список перекуров
+            const events = getEventsForDate(currentViewDate);
+            const container = document.getElementById('selectedDateSmokes');
+            
+            if (events.length === 0) {
+                container.innerHTML = `<div class="empty-state">Нет записей за этот день</div>`;
+            } else {
+                let html = '<div class="smokes-list">';
+                html += `<div class="smokes-list-title">${events.length} перекур${events.length > 1 ? 'ов' : ''}</div>`;
+                
+                events.forEach((e, i) => {
+                    const timeStr = new Date(e).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                    let intervalStr = '';
+                    let badgeClass = '';
+
+                    if (i > 0) {
+                        const interval = Math.round((new Date(e) - new Date(events[i - 1])) / (1000 * 60));
+                        intervalStr = `+${interval} мин`;
+                        
+                        if (interval >= state.minIntervalMinutes) {
+                            badgeClass = 'interval-good';
+                        } else if (interval >= state.minIntervalMinutes * 0.7) {
+                            badgeClass = 'interval-warning';
+                        } else {
+                            badgeClass = 'interval-bad';
+                        }
+                    } else {
+                        intervalStr = 'первая';
+                        badgeClass = 'interval-good';
+                    }
+
+                    html += `
+                        <div class="smoke-item">
+                            <span class="smoke-item-time">${timeStr}</span>
+                            <span class="smoke-item-interval smoke-item-badge ${badgeClass}">${intervalStr}</span>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+            }
+        }
+
+        // Обновление основного интерфейса
         function updateUI() {
             // Сегодняшние события
             const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const todayEvents = state.smokeEvents.filter(e => {
-                const eDate = new Date(e);
-                eDate.setHours(0, 0, 0, 0);
-                return eDate.getTime() === today.getTime();
-            });
+            const todayEvents = getEventsForDate(today);
 
             // Обновление счётчиков
             document.getElementById('todayCount').textContent = todayEvents.length;
+            document.getElementById('currentIntervalDisplay').textContent = state.minIntervalMinutes;
+            document.getElementById('currentLimitDisplay').textContent = state.dailyLimit ? state.dailyLimit : 'Не установлен';
 
             // Вычисление интервалов
             const intervals = [];
             for (let i = 1; i < todayEvents.length; i++) {
-                const diff = (todayEvents[i] - todayEvents[i-1]) / (1000 * 60); // в минутах
+                const diff = (todayEvents[i] - todayEvents[i-1]) / (1000 * 60);
                 intervals.push(diff);
             }
             const avgInterval = intervals.length > 0 
@@ -326,9 +891,8 @@
 
             // Адаптация минимального интервала
             if (todayEvents.length > 0) {
-                const successRate = intervals.filter(i => i >= state.minIntervalMinutes).length / intervals.length;
+                const successRate = intervals.filter(i => i >= state.minIntervalMinutes).length / Math.max(1, intervals.length);
                 if (successRate >= 0.7 && todayEvents.length >= 3) {
-                    // Увеличиваем цель на 5%
                     state.minIntervalMinutes = Math.round(state.minIntervalMinutes * 1.05);
                 }
             }
@@ -340,7 +904,7 @@
             let statusText = '✓ Можно курить';
 
             if (state.lastSmokeTime) {
-                const timeSinceLastSmoke = (now - state.lastSmokeTime) / (1000 * 60); // в минутах
+                const timeSinceLastSmoke = (now - state.lastSmokeTime) / (1000 * 60);
                 if (timeSinceLastSmoke < state.minIntervalMinutes) {
                     nextAllowedTime = new Date(state.lastSmokeTime.getTime() + state.minIntervalMinutes * 60 * 1000);
                     const remainingMinutes = Math.ceil(state.minIntervalMinutes - timeSinceLastSmoke);
@@ -362,7 +926,7 @@
 
             // Обновление таймера
             if (nextAllowedTime) {
-                const remaining = Math.max(0, (nextAllowedTime - now) / 1000); // в секундах
+                const remaining = Math.max(0, (nextAllowedTime - now) / 1000);
                 const minutes = Math.floor(remaining / 60);
                 const seconds = Math.floor(remaining % 60);
                 document.getElementById('timerDisplay').textContent = 
@@ -371,7 +935,7 @@
                 document.getElementById('timerDisplay').textContent = '00:00';
             }
 
-            // История за день
+            // История за день на главной
             const historyDiv = document.getElementById('history');
             if (todayEvents.length === 0) {
                 historyDiv.innerHTML = '<div class="empty-state">Нет записей за сегодня</div>';
@@ -381,15 +945,46 @@
                         const interval = i > 0 
                             ? Math.round((todayEvents[i] - todayEvents[i-1]) / (1000 * 60))
                             : 0;
-                        return `<div class="history-item">
-                            <span>${e.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'})}</span>
-                            ${i > 0 ? `<span class="history-time">+${interval} мин</span>` : '<span class="history-time">первая</span>'}
-                        </div>`;
+                        const timeStr = new Date(e).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                        let badgeClass = '';
+                        
+                        if (i > 0) {
+                            if (interval >= state.minIntervalMinutes) {
+                                badgeClass = 'interval-good';
+                            } else if (interval >= state.minIntervalMinutes * 0.7) {
+                                badgeClass = 'interval-warning';
+                            } else {
+                                badgeClass = 'interval-bad';
+                            }
+                            return `<div class="smoke-item">
+                                <span class="smoke-item-time">${timeStr}</span>
+                                <span class="smoke-item-interval smoke-item-badge ${badgeClass}">+${interval} мин</span>
+                            </div>`;
+                        } else {
+                            return `<div class="smoke-item">
+                                <span class="smoke-item-time">${timeStr}</span>
+                                <span class="smoke-item-interval smoke-item-badge interval-good">первая</span>
+                            </div>`;
+                        }
                     })
                     .join('');
             }
 
-            // Обновление дней без сигарет (если полный день без курения)
+            // Общая статистика
+            document.getElementById('totalSmokes').textContent = state.smokeEvents.length;
+            
+            // Среднее в день
+            if (state.smokeEvents.length > 0) {
+                const firstEvent = new Date(state.smokeEvents[0]);
+                const lastEvent = new Date(state.smokeEvents[state.smokeEvents.length - 1]);
+                const daysSpan = Math.max(1, Math.floor((lastEvent - firstEvent) / (1000 * 60 * 60 * 24))) + 1;
+                const avgPerDay = Math.round(state.smokeEvents.length / daysSpan);
+                document.getElementById('avgDay').textContent = avgPerDay;
+            } else {
+                document.getElementById('avgDay').textContent = '0';
+            }
+
+            // Дней без сигарет
             if (todayEvents.length === 0 && state.smokeEvents.length > 0) {
                 const lastDay = new Date(state.smokeEvents[state.smokeEvents.length - 1]);
                 const daysBetween = Math.floor((today - lastDay) / (1000 * 60 * 60 * 24));
@@ -410,3 +1005,4 @@
     </script>
 </body>
 </html>
+
