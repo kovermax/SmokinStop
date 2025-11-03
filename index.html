@@ -5,462 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quit Smoking Tracker</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--tg-color-bg, #ffffff);
-            color: var(--tg-color-text, #000000);
-            padding: 16px 16px 80px 16px;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        /* Навигация между вкладками */
-        .tabs-container {
-            display: flex;
-            gap: 0;
-            margin-bottom: 24px;
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            border-radius: 8px;
-            padding: 4px;
-            position: sticky;
-            top: 16px;
-            z-index: 100;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 12px 8px;
-            border: none;
-            background: transparent;
-            color: var(--tg-color-hint, #999999);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .tab-btn.active {
-            background: var(--tg-color-bg, #ffffff);
-            color: var(--tg-color-text, #000000);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.2s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: var(--tg-color-text, #000000);
-        }
-
-        .header p {
-            font-size: 14px;
-            color: var(--tg-color-hint, #999999);
-        }
-
-        .stats {
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 12px;
-        }
-
-        .stat-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .stat-item {
-            flex: 1;
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: #31a24c;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--tg-color-hint, #999999);
-            margin-top: 4px;
-        }
-
-        .timer-section {
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .timer-label {
-            font-size: 14px;
-            color: var(--tg-color-hint, #999999);
-            margin-bottom: 8px;
-        }
-
-        .timer-display {
-            font-size: 48px;
-            font-weight: bold;
-            color: var(--tg-color-text, #000000);
-            font-family: 'Courier New', monospace;
-            margin-bottom: 16px;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 16px;
-        }
-
-        .status-allowed {
-            background-color: #31a24c;
-            color: white;
-        }
-
-        .status-soon {
-            background-color: #f59e0b;
-            color: white;
-        }
-
-        .status-wait {
-            background-color: #ef4444;
-            color: white;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: #31a24c;
-            color: white;
-        }
-
-        .btn-primary:active {
-            opacity: 0.9;
-        }
-
-        .btn-secondary {
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            color: var(--tg-color-text, #000000);
-            border: 1px solid var(--tg-color-hint, #ddd);
-        }
-
-        .btn-secondary:active {
-            opacity: 0.8;
-        }
-
-        /* История и календарь */
-        .history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .history-header h2 {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--tg-color-text, #000000);
-        }
-
-        .date-nav {
-            display: flex;
-            gap: 8px;
-        }
-
-        .date-nav-btn {
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            border: 1px solid var(--tg-color-hint, #ddd);
-            color: var(--tg-color-text, #000000);
-            border-radius: 6px;
-            padding: 6px 10px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .date-nav-btn:active {
-            opacity: 0.8;
-        }
-
-        .selected-date {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--tg-color-text, #000000);
-            min-width: 120px;
-            text-align: center;
-        }
-
-        .calendar {
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 24px;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .calendar-header h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--tg-color-text, #000000);
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 8px;
-        }
-
-        .calendar-nav-btn {
-            background: transparent;
-            border: none;
-            color: #31a24c;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-bottom: 8px;
-        }
-
-        .weekday {
-            text-align: center;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--tg-color-hint, #999999);
-            padding: 4px 0;
-        }
-
-        .days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-        }
-
-        .day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            background: var(--tg-color-bg, #ffffff);
-            border: 1px solid var(--tg-color-hint, #ddd);
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--tg-color-text, #000000);
-        }
-
-        .day:hover {
-            background: var(--tg-color-hint, #f0f0f0);
-        }
-
-        .day.other-month {
-            color: var(--tg-color-hint, #999999);
-            opacity: 0.5;
-        }
-
-        .day.has-smokes {
-            background: #fecaca;
-            border-color: #ef4444;
-            font-weight: 600;
-        }
-
-        .day.selected {
-            background: #31a24c;
-            color: white;
-            border-color: #31a24c;
-        }
-
-        .smokes-list {
-            margin-top: 24px;
-        }
-
-        .smokes-list-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--tg-color-text, #000000);
-            margin-bottom: 12px;
-        }
-
-        .smoke-item {
-            padding: 12px;
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .smoke-item-time {
-            font-weight: 600;
-            color: var(--tg-color-text, #000000);
-        }
-
-        .smoke-item-interval {
-            color: var(--tg-color-hint, #999999);
-            font-size: 12px;
-        }
-
-        .smoke-item-badge {
-            background: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .interval-good {
-            background: #dcfce7;
-            color: #31a24c;
-        }
-
-        .interval-warning {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .interval-bad {
-            background: #fee2e2;
-            color: #ef4444;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 32px 16px;
-            color: var(--tg-color-hint, #999999);
-            font-size: 14px;
-        }
-
-        .settings-section {
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .settings-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--tg-color-hint, #ddd);
-        }
-
-        .settings-row:last-child {
-            border-bottom: none;
-        }
-
-        .settings-label {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--tg-color-text, #000000);
-        }
-
-        .settings-value {
-            font-size: 14px;
-            color: var(--tg-color-hint, #999999);
-        }
-
-        .btn-edit {
-            background: transparent;
-            color: #31a24c;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: var(--tg-color-secondary-bg, #f5f5f5);
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .stat-card-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #31a24c;
-        }
-
-        .stat-card-label {
-            font-size: 11px;
-            color: var(--tg-color-hint, #999999);
-            margin-top: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -594,12 +139,48 @@
         </div>
     </div>
 
+    <!-- Переключатель темы -->
+    <button class="theme-toggle" id="themeToggle" title="Переключить тему">🌙</button>
+
     <script>
+        // === УПРАВЛЕНИЕ ТЕМОЙ ===
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const body = document.body;
+
+        // Загрузка сохраненной темы
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-theme');
+                themeToggle.textContent = '☀️';
+            } else {
+                body.classList.remove('dark-theme');
+                themeToggle.textContent = '🌙';
+            }
+        }
+
+        // Переключение темы
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            } else {
+                body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+            if (Telegram.WebApp.HapticFeedback) {
+                Telegram.WebApp.HapticFeedback.impactOccurred('light');
+            }
+        });
+
         // Инициализация Telegram WebApp
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
-        // Состояние
+        // === СОСТОЯНИЕ ПРИЛОЖЕНИЯ ===
         let state = {
             smokeEvents: [],
             minIntervalMinutes: 45,
@@ -660,7 +241,6 @@
             saveState();
             updateUI();
             
-            // Вибрация
             if (Telegram.WebApp.HapticFeedback) {
                 Telegram.WebApp.HapticFeedback.impactOccurred('medium');
             }
@@ -718,7 +298,7 @@
             link.click();
         });
 
-        // Вспомогательные функции
+        // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
         function getDateString(date) {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -741,17 +321,15 @@
             });
         }
 
-        // Рендеринг календаря
+        // === РЕНДЕРИНГ КАЛЕНДАРЯ ===
         function renderCalendar() {
             const year = currentCalendarDate.getFullYear();
             const month = currentCalendarDate.getMonth();
             
-            // Обновляем заголовок
             const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
                            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
             document.getElementById('calendarMonthYear').textContent = `${months[month]} ${year}`;
 
-            // Получаем количество дней в месяце и первый день недели
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const daysInPrevMonth = new Date(year, month, 0).getDate();
@@ -803,7 +381,7 @@
             }
         }
 
-        // Обновление отображения выбранной даты и списка перекуров
+        // === ОБНОВЛЕНИЕ ОТОБРАЖЕНИЯ ДАТЫ ===
         function updateSelectedDateDisplay() {
             const today = new Date();
             let displayText = '';
@@ -813,7 +391,6 @@
             } else if (isSameDay(currentViewDate, new Date(today.getTime() - 24 * 60 * 60 * 1000))) {
                 displayText = 'Вчера';
             } else {
-                const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
                 displayText = currentViewDate.toLocaleDateString('ru-RU', { 
                     day: 'numeric', 
                     month: 'short',
@@ -823,7 +400,6 @@
             
             document.getElementById('selectedDateDisplay').textContent = displayText;
 
-            // Обновляем список перекуров
             const events = getEventsForDate(currentViewDate);
             const container = document.getElementById('selectedDateSmokes');
             
@@ -867,18 +443,15 @@
             }
         }
 
-        // Обновление основного интерфейса
+        // === ОБНОВЛЕНИЕ UI ===
         function updateUI() {
-            // Сегодняшние события
             const today = new Date();
             const todayEvents = getEventsForDate(today);
 
-            // Обновление счётчиков
             document.getElementById('todayCount').textContent = todayEvents.length;
             document.getElementById('currentIntervalDisplay').textContent = state.minIntervalMinutes;
             document.getElementById('currentLimitDisplay').textContent = state.dailyLimit ? state.dailyLimit : 'Не установлен';
 
-            // Вычисление интервалов
             const intervals = [];
             for (let i = 1; i < todayEvents.length; i++) {
                 const diff = (todayEvents[i] - todayEvents[i-1]) / (1000 * 60);
@@ -889,7 +462,6 @@
                 : 0;
             document.getElementById('avgInterval').textContent = avgInterval;
 
-            // Адаптация минимального интервала
             if (todayEvents.length > 0) {
                 const successRate = intervals.filter(i => i >= state.minIntervalMinutes).length / Math.max(1, intervals.length);
                 if (successRate >= 0.7 && todayEvents.length >= 3) {
@@ -897,7 +469,6 @@
                 }
             }
 
-            // Таймер до следующего разрешённого курения
             const now = new Date();
             let nextAllowedTime = null;
             let statusClass = 'status-allowed';
@@ -919,12 +490,10 @@
                 }
             }
 
-            // Обновление статуса
             const statusBadge = document.getElementById('statusBadge');
             statusBadge.className = `status-badge ${statusClass}`;
             statusBadge.textContent = statusText;
 
-            // Обновление таймера
             if (nextAllowedTime) {
                 const remaining = Math.max(0, (nextAllowedTime - now) / 1000);
                 const minutes = Math.floor(remaining / 60);
@@ -935,7 +504,6 @@
                 document.getElementById('timerDisplay').textContent = '00:00';
             }
 
-            // История за день на главной
             const historyDiv = document.getElementById('history');
             if (todayEvents.length === 0) {
                 historyDiv.innerHTML = '<div class="empty-state">Нет записей за сегодня</div>';
@@ -970,10 +538,8 @@
                     .join('');
             }
 
-            // Общая статистика
             document.getElementById('totalSmokes').textContent = state.smokeEvents.length;
             
-            // Среднее в день
             if (state.smokeEvents.length > 0) {
                 const firstEvent = new Date(state.smokeEvents[0]);
                 const lastEvent = new Date(state.smokeEvents[state.smokeEvents.length - 1]);
@@ -984,7 +550,6 @@
                 document.getElementById('avgDay').textContent = '0';
             }
 
-            // Дней без сигарет
             if (todayEvents.length === 0 && state.smokeEvents.length > 0) {
                 const lastDay = new Date(state.smokeEvents[state.smokeEvents.length - 1]);
                 const daysBetween = Math.floor((today - lastDay) / (1000 * 60 * 60 * 24));
@@ -996,13 +561,12 @@
             saveState();
         }
 
-        // Инициализация
+        // === ИНИЦИАЛИЗАЦИЯ ===
+        loadTheme();
         loadState();
         updateUI();
 
-        // Обновление таймера каждую секунду
         setInterval(updateUI, 1000);
     </script>
 </body>
 </html>
-
