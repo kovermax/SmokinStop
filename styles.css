@@ -738,7 +738,7 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-```css
+css
 * {
     margin: 0;
     padding: 0;
@@ -957,6 +957,7 @@ body {
     color: var(--color-btn-primary-text);
     width: 100%;
     padding: var(--space-20) var(--space-16);
+    margin-bottom: var(--space-16);
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-bold);
     box-shadow: var(--shadow-md);
@@ -1543,4 +1544,3 @@ body {
         grid-template-columns: 1fr;
     }
 }
-```
