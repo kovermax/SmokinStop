@@ -13,7 +13,7 @@
 </head>
 <body style="background: #ffffff !important; color: #1a1a1a !important;">
   <div class="container">
-    <!-- ONBOARDING -->
+    <!-- ONBOARDING: ТОЛЬКО 3 ШАГА (без выбора плана) -->
     <div id="onboardingScreen" class="onboarding-screen active">
       <div class="onboarding-content">
         <div class="onboarding-header">🚭 Бросить курить</div>
@@ -29,14 +29,6 @@
         <div class="onboarding-step" id="step3" style="display:none;">
           <div class="step-title">💰 Цена пачки сигарет (₽)?</div>
           <input type="number" id="cigPriceInput" min="1" max="1000" value="200" class="modal-input" />
-        </div>
-        <div class="onboarding-step" id="step4" style="display:none;">
-          <div class="step-title">🎯 Выбери план отказа</div>
-          <div class="plan-buttons">
-            <button class="plan-btn" data-plan="7">⚡ Быстрый (7 дн)</button>
-            <button class="plan-btn" data-plan="30">📅 Стандарт (30 дн)</button>
-            <button class="plan-btn" data-plan="60">💪 Интенсив (60 дн)</button>
-          </div>
         </div>
         <button class="btn btn-primary" id="nextOnboardingBtn" style="margin-top:24px;">Далее →</button>
       </div>
@@ -199,7 +191,7 @@
     </div>
   </div>
 
-  <!-- Подключаем отдельный скрипт -->
+  <!-- Подключаем исправленный скрипт -->
   <script src="app.js"></script>
 </body>
 </html>

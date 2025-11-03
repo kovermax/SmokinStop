@@ -30,7 +30,7 @@ let state = {
   lastSmokeTime: null,
   onboardingComplete: false,
   achievements: ACHIEVEMENTS.map(a => ({ ...a })),
-  plan: null
+  plan: 30  // ВСЕГДА 30 ДНЕЙ - БЕЗ ВЫБОРА
 };
 
 let currentCalendarDate = new Date();
@@ -52,7 +52,7 @@ function loadState() {
     state.cigPrice = p.cigPrice ?? 200;
     state.onboardingComplete = p.onboardingComplete ?? false;
     state.achievements = p.achievements || ACHIEVEMENTS.map(a => ({ ...a }));
-    state.plan = p.plan ?? null;
+    state.plan = p.plan ?? 30;
     state.lastSmokeTime = p.lastSmokeTime ? new Date(p.lastSmokeTime) : null;
   } catch (e) {
     console.error("Load error", e);
@@ -95,18 +95,9 @@ nextBtn.addEventListener("click", () => {
   }
   if (currentStep === 3) {
     state.cigPrice = parseInt(document.getElementById("cigPriceInput").value, 10) || 200;
-    document.getElementById("step3").style.display = "none";
-    document.getElementById("step4").style.display = "block";
-    currentStep = 4;
-    return;
-  }
-  if (currentStep === 4) {
-    const selected = document.querySelector(".plan-btn.selected");
-    if (!selected) {
-      alert("Выберите план отказа (7, 30 или 60 дней)");
-      return;
-    }
-    state.plan = parseInt(selected.getAttribute("data-plan"), 10);
+    // ПРОПУСКАЕМ ШАГ 4 С ВЫБОРОМ ПЛАНА
+    // СРАЗУ ЗАВЕРШАЕМ ОНБОРДИНГ
+    state.plan = 30;  // ВСЕГДА 30 ДНЕЙ
     state.onboardingComplete = true;
     saveState();
     document.getElementById("onboardingScreen").style.display = "none";
@@ -116,16 +107,8 @@ nextBtn.addEventListener("click", () => {
     renderWeeklyChart();
     showTip();
     updateUI();
+    return;
   }
-});
-
-// План выбора
-document.querySelectorAll(".plan-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".plan-btn").forEach(b => b.classList.remove("selected"));
-    btn.classList.add("selected");
-    console.log("Plan selected:", btn.getAttribute("data-plan"));
-  });
 });
 
 // === TABS ===
