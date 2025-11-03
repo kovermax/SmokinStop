@@ -46,32 +46,61 @@ function saveState(){
   }));
 }
 
+// ОНБОРДИНГ - ФИКСИРОВАННЫЙ
 const nextBtn=document.getElementById("nextOnboardingBtn");
-nextBtn.addEventListener("click",()=>{
+
+nextBtn.addEventListener("click",function(){
+  console.log("Button clicked, currentStep:", currentStep);
+  
   if(currentStep===1){
-    state.dailyLimit=parseInt(document.getElementById("dailyLimitInput").value,10)||10;
-    document.getElementById("step1").style.display="none";
-    document.getElementById("step2").style.display="block";
-    currentStep=2;return;
+    const val=parseInt(document.getElementById("dailyLimitInput").value,10);
+    if(!isNaN(val) && val>0){
+      state.dailyLimit=val;
+      console.log("Step 1 OK, dailyLimit=", state.dailyLimit);
+      document.getElementById("step1").style.display="none";
+      document.getElementById("step2").style.display="block";
+      currentStep=2;
+      return;
+    }
   }
+  
   if(currentStep===2){
-    state.minIntervalMinutes=parseInt(document.getElementById("minIntervalInput").value,10)||45;
-    document.getElementById("step2").style.display="none";
-    document.getElementById("step3").style.display="block";
-    currentStep=3;return;
+    const val=parseInt(document.getElementById("minIntervalInput").value,10);
+    if(!isNaN(val) && val>0){
+      state.minIntervalMinutes=val;
+      console.log("Step 2 OK, minIntervalMinutes=", state.minIntervalMinutes);
+      document.getElementById("step2").style.display="none";
+      document.getElementById("step3").style.display="block";
+      currentStep=3;
+      return;
+    }
   }
+  
   if(currentStep===3){
-    state.cigPrice=parseInt(document.getElementById("cigPriceInput").value,10)||200;
-    state.onboardingComplete=true;
-    saveState();
-    document.getElementById("onboardingScreen").classList.remove("active");
-    document.getElementById("onboardingScreen").classList.add("hidden");
-    document.getElementById("appScreen").style.display="block";
-    currentCalendarDate=new Date();
-    renderCalendar();
-    renderChart();
-    showTip();
-    updateUI();
+    const val=parseInt(document.getElementById("cigPriceInput").value,10);
+    if(!isNaN(val) && val>0){
+      state.cigPrice=val;
+      console.log("Step 3 OK, cigPrice=", state.cigPrice);
+      state.onboardingComplete=true;
+      saveState();
+      
+      const onboarding=document.getElementById("onboardingScreen");
+      const app=document.getElementById("appScreen");
+      
+      console.log("Hiding onboarding, showing app");
+      onboarding.classList.remove("active");
+      onboarding.classList.add("hidden");
+      app.style.display="block";
+      
+      currentCalendarDate=new Date();
+      renderCalendar();
+      renderChart();
+      showTip();
+      updateUI();
+      
+      console.log("Onboarding complete!");
+      return;
+    }
   }
 });
 
@@ -388,8 +417,12 @@ document.getElementById("nextMonthBtn").addEventListener("click",()=>{
   renderCalendar();
 });
 
+// ИНИЦИАЛИЗАЦИЯ
 loadState();
+console.log("State loaded, onboardingComplete:", state.onboardingComplete);
+
 if(state.onboardingComplete){
+  console.log("Showing app screen");
   document.getElementById("onboardingScreen").classList.remove("active");
   document.getElementById("onboardingScreen").classList.add("hidden");
   document.getElementById("appScreen").style.display="block";
@@ -397,7 +430,10 @@ if(state.onboardingComplete){
   renderCalendar();
   renderChart();
   showTip();
+}else{
+  console.log("Showing onboarding");
 }
+
 updateUI();
 setInterval(updateTimer,1000);
 setInterval(updateUI,10000);
