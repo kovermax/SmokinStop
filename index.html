@@ -147,32 +147,34 @@
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
+        // Функция для установки темы
+        function setTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark-theme');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('smokeTrackerTheme', 'dark');
+            } else {
+                body.classList.remove('dark-theme');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('smokeTrackerTheme', 'light');
+            }
+        }
+
         // Загрузка сохраненной темы при загрузке страницы
         function loadTheme() {
             const savedTheme = localStorage.getItem('smokeTrackerTheme');
             if (savedTheme === 'dark') {
-                body.classList.add('dark-theme');
-                themeToggle.textContent = '☀️';
+                setTheme(true);
             } else {
-                body.classList.remove('dark-theme');
-                themeToggle.textContent = '🌙';
+                setTheme(false);
             }
         }
 
         // Переключение темы
-        themeToggle.addEventListener('click', (e) => {
-            e.preventDefault();
+        themeToggle.addEventListener('click', function(e) {
             e.stopPropagation();
-            
-            if (body.classList.contains('dark-theme')) {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('smokeTrackerTheme', 'light');
-                themeToggle.textContent = '🌙';
-            } else {
-                body.classList.add('dark-theme');
-                localStorage.setItem('smokeTrackerTheme', 'dark');
-                themeToggle.textContent = '☀️';
-            }
+            const isDarkNow = body.classList.contains('dark-theme');
+            setTheme(!isDarkNow);
             
             if (Telegram.WebApp.HapticFeedback) {
                 Telegram.WebApp.HapticFeedback.impactOccurred('light');
