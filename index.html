@@ -208,7 +208,7 @@
                 </div>
 
                 <button class="btn btn-secondary" id="exportBtn">📥 Экспортировать</button>
-                <button class="btn btn-secondary" id="resetBtn" style="color: var(--color-error);">🔄 Сброс</button>
+                <button class="btn btn-secondary" id="resetBtn">🔄 Сброс</button>
             </div>
         </div>
     </div>
@@ -235,9 +235,6 @@
             </div>
         </div>
     </div>
-
-    <!-- ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ -->
-    <button class="theme-toggle" id="themeToggle" title="Переключить тему">🌙</button>
 
     <script>
         // === КОНСТАНТЫ ===
@@ -271,8 +268,7 @@
             cigPrice: 200,
             lastSmokeTime: null,
             onboardingComplete: false,
-            achievements: ACHIEVEMENTS.map(a => ({ ...a })),
-            theme: 'light'
+            achievements: ACHIEVEMENTS.map(a => ({ ...a }))
         };
 
         let currentCalendarDate = new Date();
@@ -281,7 +277,7 @@
 
         // === ЗАГРУЗКА/СОХРАНЕНИЕ ===
         function loadState() {
-            const stored = localStorage.getItem('smokeTrackerStateComplete');
+            const stored = localStorage.getItem('smokeTrackerLightTheme');
             if (stored) {
                 try {
                     const parsed = JSON.parse(stored);
@@ -294,7 +290,6 @@
                     state.cigPrice = parsed.cigPrice || 200;
                     state.onboardingComplete = parsed.onboardingComplete;
                     state.achievements = parsed.achievements || ACHIEVEMENTS.map(a => ({ ...a }));
-                    state.theme = parsed.theme || 'light';
                     if (parsed.lastSmokeTime) state.lastSmokeTime = new Date(parsed.lastSmokeTime);
                 } catch (e) {
                     console.error('Ошибка загрузки:', e);
@@ -311,37 +306,14 @@
                 })),
                 lastSmokeTime: state.lastSmokeTime ? state.lastSmokeTime.toISOString() : null
             };
-            localStorage.setItem('smokeTrackerStateComplete', JSON.stringify(toSave));
+            localStorage.setItem('smokeTrackerLightTheme', JSON.stringify(toSave));
         }
-
-        // === ТЕМА ===
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-
-        function applyTheme(isDark) {
-            if (isDark) {
-                body.classList.add('dark-theme');
-                themeToggle.textContent = '☀️';
-                state.theme = 'dark';
-            } else {
-                body.classList.remove('dark-theme');
-                themeToggle.textContent = '🌙';
-                state.theme = 'light';
-            }
-            saveState();
-        }
-
-        themeToggle.addEventListener('click', () => {
-            const isDark = body.classList.contains('dark-theme');
-            applyTheme(!isDark);
-        });
 
         // === ИНИЦИАЛИЗАЦИЯ ===
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
         loadState();
-        applyTheme(state.theme === 'dark');
 
         if (!state.onboardingComplete) {
             document.getElementById('onboardingScreen').classList.add('active');
@@ -499,7 +471,7 @@
 
         document.getElementById('resetBtn').addEventListener('click', () => {
             if (confirm('Удалить все данные?')) {
-                localStorage.removeItem('smokeTrackerStateComplete');
+                localStorage.removeItem('smokeTrackerLightTheme');
                 location.reload();
             }
         });
@@ -629,7 +601,7 @@
                 const events = getEventsForDate(date).length;
                 const dayName = days[(date.getDay() + 6) % 7];
                 const percentage = Math.min(100, (events / state.dailyLimit) * 100);
-                const color = events <= state.dailyLimit ? '#4caf50' : '#f44336';
+                const color = events <= state.dailyLimit ? '#2e7d32' : '#c62828';
                 
                 html += '<div class="chart-bar-container">' +
                     '<div class="chart-bar" style="height: ' + percentage + '%; background: ' + color + ';"></div>' +
