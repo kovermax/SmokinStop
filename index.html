@@ -1,181 +1,207 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quit Smoking Tracker</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <link rel="stylesheet" href="styles.css?v=final" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
+  <link rel="stylesheet" href="styles.css">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 </head>
-<body style="background:#ffffff!important;color:#1a1a1a!important;">
-  <div class="container">
-    <div id="onboardingScreen" class="onboarding-screen active">
-      <div class="onboarding-content">
-        <div class="onboarding-header">🚭 Бросить курить</div>
-        <div class="onboarding-subtitle">Твой путь к здоровой жизни</div>
-        <div class="onboarding-step" id="step1">
-          <div class="step-title">📊 Сколько сигарет в день?</div>
-          <input type="number" id="dailyLimitInput" min="1" max="100" value="5" class="modal-input" />
-        </div>
-        <div class="onboarding-step" id="step2" style="display:none;">
-          <div class="step-title">⏱️ Интервал между перекурами (мин)?</div>
-          <input type="number" id="minIntervalInput" min="5" max="300" value="45" class="modal-input" />
-        </div>
-        <div class="onboarding-step" id="step3" style="display:none;">
-          <div class="step-title">💰 Цена пачки сигарет (₽)?</div>
-          <input type="number" id="cigPriceInput" min="1" max="1000" value="200" class="modal-input" />
-        </div>
-        <button class="btn btn-primary" id="nextOnboardingBtn" style="margin-top:24px;">Далее →</button>
+<body>
+  <!-- ONBOARDING -->
+  <div id="onboardingScreen" class="onboarding-screen active">
+    <div class="onboarding-card">
+      <h1>🚭 Бросить курить</h1>
+      <p class="onboarding-subtitle">Начни путь к здоровой жизни</p>
+      
+      <div class="onboarding-step" id="step1">
+        <label>Сколько сигарет в день куришь?</label>
+        <input type="number" id="dailyLimitInput" value="10" min="1" max="100">
       </div>
-    </div>
-    <div id="appScreen" style="display:none;">
-      <div class="header">
-        <h1>🚭 Бросить курить</h1>
-        <p>Ты молодец! Продолжай!</p>
+      
+      <div class="onboarding-step" id="step2" style="display:none;">
+        <label>Интервал между перекурами (минуты)</label>
+        <input type="number" id="minIntervalInput" value="45" min="5" max="300">
       </div>
-      <div class="tip-card" id="tipCard" style="display:none;">
-        <div class="tip-icon">💡</div>
-        <div class="tip-text" id="tipText"></div>
+      
+      <div class="onboarding-step" id="step3" style="display:none;">
+        <label>Цена пачки сигарет (рубли)</label>
+        <input type="number" id="cigPriceInput" value="200" min="1" max="1000">
       </div>
-      <div class="tabs-container">
-        <button class="tab-btn active" data-tab="home">📊 Главная</button>
-        <button class="tab-btn" data-tab="history">📈 История</button>
-        <button class="tab-btn" data-tab="achievements">🏆 Достижения</button>
-        <button class="tab-btn" data-tab="settings">⚙️ Параметры</button>
-      </div>
-      <div id="home" class="tab-content active">
-        <div class="money-card">
-          <div class="money-icon">💰</div>
-          <div class="money-info">
-            <div class="money-label">Сэкономлено</div>
-            <div class="money-value" id="moneySaved">0 ₽</div>
-            <div class="money-sublabel" id="cigsSaved">0 шт</div>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat-row">
-            <div class="stat-item">
-              <div class="stat-value" id="daysClean">0</div>
-              <div class="stat-label">Дней без</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value" id="todayCount">0</div>
-              <div class="stat-label">Сегодня</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-value" id="weekAvg">0</div>
-              <div class="stat-label">Неделя</div>
-            </div>
-          </div>
-        </div>
-        <div class="daily-progress">
-          <div class="progress-header">Лимит: <span id="progressCount">0</span>/<span id="progressLimit">5</span></div>
-          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-          <div class="progress-status" id="progressStatus">✅ В пределах</div>
-        </div>
-        <div class="timer-section">
-          <div class="timer-label">Следующий перекур через</div>
-          <div class="timer-display" id="timerDisplay">00:00</div>
-          <button class="btn btn-primary" id="smokeBtn">Покурил 🚬</button>
-          <div id="statusBadge" class="status-badge status-allowed">✓ Можно курить</div>
-        </div>
-        <div class="smokes-list">
-          <div class="smokes-list-title">Сегодня</div>
-          <div id="todayList"></div>
-        </div>
-      </div>
-      <div id="history" class="tab-content">
-        <div class="chart-section">
-          <div class="chart-title">📊 За неделю</div>
-          <div class="chart-bars" id="weeklyChart"></div>
-        </div>
-        <div class="calendar">
-          <div class="calendar-header">
-            <h3 id="calendarMonthYear">Месяц</h3>
-            <div class="calendar-nav">
-              <button class="calendar-nav-btn" id="prevMonthBtn">‹</button>
-              <button class="calendar-nav-btn" id="nextMonthBtn">›</button>
-            </div>
-          </div>
-          <div class="weekdays">
-            <div class="weekday">Пн</div><div class="weekday">Вт</div><div class="weekday">Ср</div>
-            <div class="weekday">Чт</div><div class="weekday">Пт</div><div class="weekday">Сб</div><div class="weekday">Вс</div>
-          </div>
-          <div class="days" id="calendarDays"></div>
-        </div>
-        <div id="selectedDateSmokes"></div>
-      </div>
-      <div id="achievements" class="tab-content">
-        <div class="achievements-container" id="achievementsContainer"></div>
-      </div>
-      <div id="settings" class="tab-content">
-        <div class="settings-section">
-          <div class="settings-row">
-            <span class="settings-label">Дневной лимит</span>
-            <button class="btn-edit" id="editLimitBtn">Изменить</button>
-          </div>
-          <div class="settings-row">
-            <span class="settings-value" id="currentLimitDisplay">5</span>
-          </div>
-        </div>
-        <div class="settings-section">
-          <div class="settings-row">
-            <span class="settings-label">Интервал (мин)</span>
-            <button class="btn-edit" id="editIntervalBtn">Изменить</button>
-          </div>
-          <div class="settings-row">
-            <span class="settings-value" id="currentIntervalDisplay">45</span>
-          </div>
-        </div>
-        <div class="settings-section">
-          <div class="settings-row">
-            <span class="settings-label">Цена пачки (₽)</span>
-            <button class="btn-edit" id="editPriceBtn">Изменить</button>
-          </div>
-          <div class="settings-row">
-            <span class="settings-value" id="currentPriceDisplay">200</span>
-          </div>
-        </div>
-        <div class="settings-section">
-          <div class="settings-row">
-            <span class="settings-label">Статистика</span>
-          </div>
-          <div style="padding:12px 0;">
-            <div class="stats-grid">
-              <div class="stat-card"><div class="stat-card-value" id="totalSmokes">0</div><div class="stat-card-label">Всего</div></div>
-              <div class="stat-card"><div class="stat-card-value" id="avgDay">0</div><div class="stat-card-label">В день</div></div>
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-secondary" id="exportBtn">📥 Экспорт</button>
-        <button class="btn btn-secondary" id="resetBtn">🔄 Сброс</button>
-      </div>
+      
+      <button id="nextOnboardingBtn" class="btn-primary">Далее →</button>
     </div>
   </div>
+
+  <!-- APP -->
+  <div id="appScreen" style="display:none;">
+    <div class="app-header">
+      <h1>🚭 Бросить курить</h1>
+      <p>Ты молодец! Продолжай в том же духе!</p>
+    </div>
+
+    <div class="tips-box" id="tipCard" style="display:none;">
+      <span class="tip-icon">💡</span>
+      <span id="tipText"></span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="main">📊 Главная</button>
+      <button class="tab" data-tab="history">📈 История</button>
+      <button class="tab" data-tab="achievements">🏆 Достижения</button>
+      <button class="tab" data-tab="settings">⚙️ Параметры</button>
+    </div>
+
+    <!-- MAIN TAB -->
+    <div id="main" class="tab-content active">
+      <div class="card savings-card">
+        <div class="savings-header">
+          <span class="savings-icon">💰</span>
+          <div class="savings-info">
+            <div class="savings-label">Сэкономлено</div>
+            <div class="savings-amount" id="moneySaved">0 ₽</div>
+            <div class="savings-cigarettes" id="cigsSaved">0 шт</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card stats-card">
+        <div class="stat-item">
+          <div class="stat-num" id="daysClean">0</div>
+          <div class="stat-label">Дней без курения</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="todayCount">0</div>
+          <div class="stat-label">Сегодня сигарет</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="weekAvg">0</div>
+          <div class="stat-label">В среднем за неделю</div>
+        </div>
+      </div>
+
+      <div class="card progress-card">
+        <div class="progress-header">
+          <span>Лимит на сегодня</span>
+          <span id="progressText">0/10</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressFill"></div>
+        </div>
+        <div class="progress-status" id="progressStatus">✅ В пределах нормы</div>
+      </div>
+
+      <div class="card timer-card">
+        <div class="timer-label">Следующий перекур через:</div>
+        <div class="timer-display" id="timerDisplay">00:00</div>
+        <button id="smokeBtn" class="btn-primary btn-large">Покурил 🚬</button>
+        <div class="timer-status" id="statusBadge">✓ Можно курить</div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Перекуры сегодня</h3>
+        <div id="todayList" class="smokes-list"></div>
+      </div>
+    </div>
+
+    <!-- HISTORY TAB -->
+    <div id="history" class="tab-content">
+      <div class="card">
+        <h3 class="card-title">📊 График за неделю</h3>
+        <div class="chart" id="weeklyChart"></div>
+      </div>
+
+      <div class="card calendar-card">
+        <div class="calendar-header">
+          <h3 id="calendarMonth">Месяц</h3>
+          <div class="calendar-nav">
+            <button id="prevMonthBtn" class="nav-btn">◀</button>
+            <button id="nextMonthBtn" class="nav-btn">▶</button>
+          </div>
+        </div>
+        <div class="calendar-weekdays">
+          <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+        </div>
+        <div class="calendar-days" id="calendarDays"></div>
+      </div>
+
+      <div id="selectedDateSmokes"></div>
+    </div>
+
+    <!-- ACHIEVEMENTS TAB -->
+    <div id="achievements" class="tab-content">
+      <div class="achievements-grid" id="achievementsContainer"></div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="settings" class="tab-content">
+      <div class="card">
+        <div class="setting-row">
+          <span>Дневной лимит</span>
+          <button class="btn-small" id="editLimitBtn">Изменить</button>
+        </div>
+        <div class="setting-value" id="currentLimitDisplay">10 сигарет</div>
+      </div>
+
+      <div class="card">
+        <div class="setting-row">
+          <span>Интервал между перекурами</span>
+          <button class="btn-small" id="editIntervalBtn">Изменить</button>
+        </div>
+        <div class="setting-value" id="currentIntervalDisplay">45 минут</div>
+      </div>
+
+      <div class="card">
+        <div class="setting-row">
+          <span>Цена пачки</span>
+          <button class="btn-small" id="editPriceBtn">Изменить</button>
+        </div>
+        <div class="setting-value" id="currentPriceDisplay">200 ₽</div>
+      </div>
+
+      <div class="card stats-table">
+        <div class="stat-row">
+          <span>Всего курено</span>
+          <span class="stat-val" id="totalSmokes">0</span>
+        </div>
+        <div class="stat-row">
+          <span>В среднем в день</span>
+          <span class="stat-val" id="avgDay">0</span>
+        </div>
+      </div>
+
+      <button id="exportBtn" class="btn-secondary">📥 Экспорт данных</button>
+      <button id="resetBtn" class="btn-secondary btn-danger">🔄 Сброс приложения</button>
+    </div>
+  </div>
+
+  <!-- MODAL -->
   <div id="reasonModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">Причина?</div>
-      <div class="modal-body">
-        <label class="modal-label">Выбери или напиши:</label>
-        <div class="reason-buttons">
-          <button class="reason-btn" data-reason="Стресс">😰 Стресс</button>
-          <button class="reason-btn" data-reason="Социум">👥 Люди</button>
-          <button class="reason-btn" data-reason="Скука">😑 Скука</button>
-          <button class="reason-btn" data-reason="Привычка">🔄 Привычка</button>
-          <button class="reason-btn" data-reason="Алкоголь">🍺 Спиртное</button>
-          <button class="reason-btn" data-reason="Кофе">☕ Кофе</button>
-        </div>
-        <textarea class="modal-input" id="reasonInput" placeholder="Или напиши..."></textarea>
+    <div class="modal-box">
+      <h2>Почему ты курил?</h2>
+      <p class="modal-subtitle">Выбери или напиши причину</p>
+      
+      <div class="reason-buttons">
+        <button class="reason-btn" data-reason="Стресс">😰 Стресс</button>
+        <button class="reason-btn" data-reason="Социум">👥 Люди</button>
+        <button class="reason-btn" data-reason="Скука">😑 Скука</button>
+        <button class="reason-btn" data-reason="Привычка">🔄 Привычка</button>
+        <button class="reason-btn" data-reason="Алкоголь">🍺 Спиртное</button>
+        <button class="reason-btn" data-reason="Кофе">☕ Кофе</button>
       </div>
+      
+      <textarea id="reasonInput" placeholder="Или напиши свою..."></textarea>
+      
       <div class="modal-buttons">
-        <button class="btn btn-secondary" id="cancelReasonBtn">Отмена</button>
-        <button class="btn btn-primary" id="confirmReasonBtn">OK</button>
+        <button id="cancelReasonBtn" class="btn-secondary">Отмена</button>
+        <button id="confirmReasonBtn" class="btn-primary">Готово</button>
       </div>
     </div>
   </div>
-  <script src="app.js?v=final"></script>
+
+  <script src="app.js"></script>
 </body>
 </html>
