@@ -45,8 +45,8 @@
             <div class="timer-section">
                 <div class="timer-label">Следующий перекур разрешён через</div>
                 <div class="timer-display" id="timerDisplay">00:00</div>
-                <div id="statusBadge" class="status-badge status-allowed">✓ Можно курить</div>
                 <button class="btn btn-primary" id="smokeBtn">Покурил 🚬</button>
+                <div id="statusBadge" class="status-badge status-allowed">✓ Можно курить</div>
             </div>
 
             <div class="button-group">
@@ -145,12 +145,11 @@
     <script>
         // === УПРАВЛЕНИЕ ТЕМОЙ ===
         const themeToggle = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
         const body = document.body;
 
-        // Загрузка сохраненной темы
+        // Загрузка сохраненной темы при загрузке страницы
         function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
+            const savedTheme = localStorage.getItem('smokeTrackerTheme');
             if (savedTheme === 'dark') {
                 body.classList.add('dark-theme');
                 themeToggle.textContent = '☀️';
@@ -161,16 +160,20 @@
         }
 
         // Переключение темы
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
             if (body.classList.contains('dark-theme')) {
                 body.classList.remove('dark-theme');
-                localStorage.setItem('theme', 'light');
+                localStorage.setItem('smokeTrackerTheme', 'light');
                 themeToggle.textContent = '🌙';
             } else {
                 body.classList.add('dark-theme');
-                localStorage.setItem('theme', 'dark');
+                localStorage.setItem('smokeTrackerTheme', 'dark');
                 themeToggle.textContent = '☀️';
             }
+            
             if (Telegram.WebApp.HapticFeedback) {
                 Telegram.WebApp.HapticFeedback.impactOccurred('light');
             }
